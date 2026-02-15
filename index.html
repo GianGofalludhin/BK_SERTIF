@@ -7,6 +7,10 @@
   
   <!-- QR Code Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- html2canvas for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- jsPDF for PDF creation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     * {
@@ -77,6 +81,7 @@
       width: 100px;
       height: 100px;
       object-fit: contain;
+      flex-shrink: 0;
     }
 
     .header-text {
@@ -181,6 +186,12 @@
 
     button:active {
       transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .athlete-list {
@@ -353,6 +364,7 @@
       width: 100px;
       height: 100px;
       object-fit: contain;
+      flex-shrink: 0;
     }
 
     .certificate h2 {
@@ -483,14 +495,14 @@
       flex-wrap: wrap;
     }
 
-    .print-btn {
+    .download-btn {
       background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
       padding: 12px 30px;
       font-size: 15px;
       box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
     }
 
-    .print-btn:hover {
+    .download-btn:hover {
       background: linear-gradient(135deg, #218838 0%, #1a6928 100%);
       box-shadow: 0 6px 18px rgba(40, 167, 69, 0.4);
     }
@@ -556,54 +568,33 @@
       background: #003d82;
     }
 
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-      }
-
-      header, .search-container, .action-buttons {
-        display: none;
-      }
-
-      .certificate-wrapper {
-        display: block;
-        box-shadow: none;
-      }
-
-      .certificate {
-        box-shadow: none;
-        page-break-inside: avoid;
-      }
-
-      .qr-section {
-        position: absolute;
-        bottom: 60px;
-        right: 40px;
-        margin-top: 0;
-      }
-    }
-
+    /* Responsive Styles - Improved for Mobile */
     @media (max-width: 768px) {
       body {
         padding: 10px;
       }
 
       header {
-        padding: 15px 12px;
+        padding: 20px 15px;
+      }
+
+      .header-content {
+        gap: 12px;
       }
 
       .header-logo {
-        width: 55px;
-        height: 55px;
+        width: 70px;
+        height: 70px;
       }
 
       header h1 {
         font-size: 18px;
+        line-height: 1.3;
       }
 
       header p {
         font-size: 12px;
+        line-height: 1.4;
       }
 
       .search-container {
@@ -645,7 +636,8 @@
       }
 
       .logos {
-        gap: 8px;
+        gap: 10px;
+        justify-content: space-evenly;
       }
 
       .logo-img {
@@ -697,9 +689,10 @@
 
       .action-buttons {
         flex-direction: column;
+        gap: 8px;
       }
 
-      .print-btn, .back-btn {
+      .download-btn, .back-btn {
         width: 100%;
         padding: 14px;
       }
@@ -711,17 +704,25 @@
     }
 
     @media (max-width: 480px) {
+      header {
+        padding: 15px 10px;
+      }
+
+      .header-content {
+        gap: 8px;
+      }
+
+      .header-logo {
+        width: 55px;
+        height: 55px;
+      }
+
       header h1 {
         font-size: 16px;
       }
 
       header p {
         font-size: 11px;
-      }
-
-      .header-logo {
-        width: 45px;
-        height: 45px;
       }
 
       .certificate h2 {
@@ -747,6 +748,19 @@
     }
 
     @media (max-width: 360px) {
+      .header-logo {
+        width: 50px;
+        height: 50px;
+      }
+
+      header h1 {
+        font-size: 14px;
+      }
+
+      header p {
+        font-size: 10px;
+      }
+
       .certificate h2 {
         font-size: 16px;
       }
@@ -758,6 +772,10 @@
       .logo-img {
         width: 55px;
         height: 55px;
+      }
+
+      .logos {
+        gap: 8px;
       }
     }
   </style>
@@ -793,7 +811,7 @@
 </div>
 
 <div class="certificate-wrapper" id="certificateWrapper">
-  <div class="certificate">
+  <div class="certificate" id="certificateContent">
     <div class="cert-border">
       <div class="corner-decoration top-left"></div>
       <div class="corner-decoration top-right"></div>
@@ -848,7 +866,7 @@
   </div>
 
   <div class="action-buttons">
-    <button class="print-btn" onclick="window.print()">🖨️ Download / Print PDF</button>
+    <button class="download-btn" id="downloadBtn" onclick="downloadCertificate()">📥 Download PDF</button>
     <button class="back-btn" onclick="backToSearch()">← Kembali</button>
   </div>
 </div>
@@ -998,6 +1016,66 @@
       
     } else {
       alert("❌ Nama tidak ditemukan!\n\nPastikan nama sesuai dengan daftar atlet.\nKlik 'Lihat Daftar Atlet' untuk melihat nama yang terdaftar.");
+    }
+  }
+
+  async function downloadCertificate() {
+    const button = document.getElementById('downloadBtn');
+    const originalText = button.innerHTML;
+    
+    // Disable button and show loading
+    button.disabled = true;
+    button.innerHTML = '⏳ Membuat PDF...';
+    
+    try {
+      const certificate = document.getElementById('certificateContent');
+      
+      // Use html2canvas to capture the certificate
+      const canvas = await html2canvas(certificate, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+      
+      // Get jsPDF from window
+      const { jsPDF } = window.jspdf;
+      
+      // Calculate dimensions for A4 landscape
+      const imgWidth = 297; // A4 width in mm (landscape)
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      // Create PDF
+      const pdf = new jsPDF({
+        orientation: imgHeight > imgWidth ? 'portrait' : 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      // Add image to PDF
+      const imgData = canvas.toDataURL('image/png');
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      
+      // Get athlete name for filename
+      const athleteName = document.getElementById('athleteName').innerText;
+      const certId = document.getElementById('certId').innerText.replace('ID: ', '');
+      const filename = `Sertifikat_${athleteName.replace(/\s+/g, '_')}_${certId}.pdf`;
+      
+      // Download PDF
+      pdf.save(filename);
+      
+      // Show success message
+      button.innerHTML = '✅ Download Berhasil!';
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Terjadi kesalahan saat membuat PDF. Silakan coba lagi.');
+      button.innerHTML = originalText;
+      button.disabled = false;
     }
   }
 
