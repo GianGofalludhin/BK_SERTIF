@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sertifikat BK PORPROV Jabar 2025</title>
+  
+  <!-- QR Code Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a2540 0%, #1a4d7a 100%);
+      min-height: 100vh;
+      padding: 15px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+    }
+
+    body::after {
+      content: 'PERBASI KAB.SUBANG';
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      z-index: 1;
+    }
+
+    header {
+      background: linear-gradient(135deg, #003d82 0%, #0056b3 100%);
+      backdrop-filter: blur(10px);
+      padding: 25px 20px;
+      border-radius: 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      margin-bottom: 25px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      border-top: 4px solid #ffd700;
+      border-bottom: 4px solid #ffd700;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .header-logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .header-text {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    header h1 {
+      color: #ffffff;
+      font-size: 24px;
+      margin-bottom: 10px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      color: #e8f4f8;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .search-container {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 250, 255, 0.98) 100%);
+      backdrop-filter: blur(10px);
+      padding: 30px 25px;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      max-width: 650px;
+      margin: 0 auto 25px;
+      border: 2px solid #0056b3;
+      border-top: 5px solid #ffd700;
+      position: relative;
+      z-index: 10;
+    }
+
+    .search-container h2 {
+      color: #003d82;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 22px;
+      text-shadow: none;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    input {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px 18px;
+      border-radius: 6px;
+      border: 2px solid #0056b3;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+
+    input::placeholder {
+      color: #6c757d;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #003d82;
+      box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.15);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    button {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 61, 130, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 61, 130, 0.4);
+      background: linear-gradient(135deg, #004999 0%, #002f66 100%);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .athlete-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .athlete-list.show {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .athlete-list h3 {
+      color: #003d82;
+      margin-bottom: 12px;
+      font-size: 14px;
+      text-shadow: none;
+      font-weight: 600;
+    }
+
+    .athlete-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .athlete-list li {
+      padding: 12px 15px;
+      background: #ffffff;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #1a1a1a;
+      border: 1px solid #dee2e6;
+    }
+
+    .athlete-list li:hover {
+      background: #e8f4f8;
+      border-color: #0056b3;
+      transform: translateX(5px);
+      color: #003d82;
+      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.15);
+    }
+
+    .toggle-list {
+      background: #ffffff;
+      color: #003d82;
+      border: 2px solid #0056b3;
+      padding: 12px 20px;
+      font-size: 14px;
+      margin-top: 15px;
+      width: 100%;
+      font-weight: 600;
+    }
+
+    .toggle-list:hover {
+      background: #e8f4f8;
+      border-color: #003d82;
+    }
+
+    /* Certificate Styles */
+    .certificate-wrapper {
+      display: none;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .certificate {
+      background: white;
+      padding: 25px 15px;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(220, 20, 60, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .certificate::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 15px;
+      background: linear-gradient(90deg, #0d47a1, #1976d2, #0d47a1);
+    }
+
+    .certificate::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 15px;
+      background: linear-gradient(90deg, #0d47a1, #1976d2, #0d47a1);
+    }
+
+    .cert-border {
+      border: 2px solid #0d47a1;
+      padding: 20px 15px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .corner-decoration {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 2px solid #ffd700;
+    }
+
+    .corner-decoration.top-left {
+      top: 8px;
+      left: 8px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .corner-decoration.top-right {
+      top: 8px;
+      right: 8px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .corner-decoration.bottom-left {
+      bottom: 8px;
+      left: 8px;
+      border-right: none;
+      border-top: none;
+    }
+
+    .corner-decoration.bottom-right {
+      bottom: 8px;
+      right: 8px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .logos {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo-placeholder {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #0d47a1;
+      text-align: center;
+      font-weight: bold;
+      border: 3px solid #0d47a1;
+      line-height: 1.3;
+      padding: 5px;
+    }
+
+    .logo-img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .certificate h2 {
+      text-align: center;
+      font-size: 26px;
+      color: #0d47a1;
+      margin: 15px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 800;
+    }
+
+    .cert-subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .certificate p {
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .name-section {
+      text-align: center;
+      margin: 15px 0;
+      padding: 12px;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
+      border-radius: 10px;
+      border-left: 4px solid #0d47a1;
+    }
+
+    .name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0d47a1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+      word-wrap: break-word;
+    }
+
+    .id-number {
+      font-size: 11px;
+      color: #666;
+      font-family: 'Courier New', monospace;
+    }
+
+    .event-box {
+      background: #0d47a1;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .event-box h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .event-box p {
+      color: #e3f2fd;
+      font-size: 12px;
+    }
+
+    .signature-section {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .signature-box {
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .signature-box p {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .signature-img {
+      width: 140px;
+      height: 70px;
+      object-fit: contain;
+      margin: 10px auto;
+      display: block;
+    }
+
+    .signature-name {
+      font-weight: bold;
+      color: #0d47a1;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .qr-section {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .qr-code {
+      background: white;
+      padding: 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+
+    .qr-label {
+      font-size: 10px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .print-btn {
+      background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+      padding: 12px 30px;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .print-btn:hover {
+      background: linear-gradient(135deg, #218838 0%, #1a6928 100%);
+      box-shadow: 0 6px 18px rgba(40, 167, 69, 0.4);
+    }
+
+    .back-btn {
+      background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+      padding: 12px 30px;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #5a6268 0%, #3d4247 100%);
+      box-shadow: 0 6px 18px rgba(108, 117, 125, 0.4);
+    }
+
+    /* Suggestions styling */
+    #suggestions {
+      display: none;
+      margin-top: 10px;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 2px solid #0056b3;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #suggestions > div {
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-bottom: 5px;
+      background: #f8f9fa;
+      color: #1a1a1a;
+      transition: all 0.2s ease;
+      border: 1px solid #dee2e6;
+    }
+
+    #suggestions > div:hover {
+      background: #e8f4f8;
+      border-color: #0056b3;
+      color: #003d82;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #e9ecef;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #0056b3;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #003d82;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      header, .search-container, .action-buttons {
+        display: none;
+      }
+
+      .certificate-wrapper {
+        display: block;
+        box-shadow: none;
+      }
+
+      .certificate {
+        box-shadow: none;
+        page-break-inside: avoid;
+      }
+
+      .qr-section {
+        position: absolute;
+        bottom: 60px;
+        right: 40px;
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      header {
+        padding: 15px 12px;
+      }
+
+      .header-logo {
+        width: 55px;
+        height: 55px;
+      }
+
+      header h1 {
+        font-size: 18px;
+      }
+
+      header p {
+        font-size: 12px;
+      }
+
+      .search-container {
+        padding: 20px 15px;
+      }
+
+      .search-container h2 {
+        font-size: 18px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      input {
+        width: 100%;
+        min-width: 100%;
+        padding: 12px 15px;
+        font-size: 14px;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      .certificate {
+        padding: 20px 12px;
+      }
+
+      .cert-border {
+        padding: 15px 10px;
+      }
+
+      .corner-decoration {
+        width: 25px;
+        height: 25px;
+      }
+
+      .logos {
+        gap: 8px;
+      }
+
+      .logo-img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .certificate h2 {
+        font-size: 20px;
+        letter-spacing: 1px;
+      }
+
+      .cert-subtitle {
+        font-size: 12px;
+      }
+
+      .certificate p {
+        font-size: 12px;
+      }
+
+      .name {
+        font-size: 17px;
+      }
+
+      .id-number {
+        font-size: 10px;
+      }
+
+      .event-box h3 {
+        font-size: 13px;
+      }
+
+      .event-box p {
+        font-size: 11px;
+      }
+
+      .signature-img {
+        width: 110px;
+        height: 55px;
+      }
+
+      .signature-name {
+        font-size: 11px;
+      }
+
+      .signature-box p {
+        font-size: 10px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .print-btn, .back-btn {
+        width: 100%;
+        padding: 14px;
+      }
+
+      .athlete-list li {
+        font-size: 13px;
+        padding: 10px 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 16px;
+      }
+
+      header p {
+        font-size: 11px;
+      }
+
+      .header-logo {
+        width: 45px;
+        height: 45px;
+      }
+
+      .certificate h2 {
+        font-size: 18px;
+      }
+
+      .name {
+        font-size: 16px;
+      }
+
+      .logo-img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .event-box h3 {
+        font-size: 12px;
+      }
+
+      .event-box p {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .certificate h2 {
+        font-size: 16px;
+      }
+
+      .name {
+        font-size: 15px;
+      }
+
+      .logo-img {
+        width: 55px;
+        height: 55px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <img src="image/jangan.png" alt="Logo" class="header-logo">
+    <div class="header-text">
+      <h1>Sertifikat Keikutsertaan Atlet</h1>
+      <p>Babak Kualifikasi PORPROV Jawa Barat 2025 - Cabang Bola Basket</p>
+    </div>
+    <img src="image/jangan (1).png" alt="Logo" class="header-logo">
+  </div>
+</header>
+
+<div class="search-container">
+  <h2>Cari Sertifikat Anda</h2>
+  <div class="search-box">
+    <input type="text" id="searchName" placeholder="Masukkan nama lengkap atlet..." oninput="showSuggestions()">
+    <button onclick="findCertificate()">🔍 Cari</button>
+  </div>
+  
+  <div id="suggestions"></div>
+  
+  <button class="toggle-list" onclick="toggleList()">📋 Lihat Daftar Atlet</button>
+  
+  <div class="athlete-list" id="athleteList">
+    <h3>Daftar Atlet Terdaftar:</h3>
+    <ul id="athleteListUl"></ul>
+  </div>
+</div>
+
+<div class="certificate-wrapper" id="certificateWrapper">
+  <div class="certificate">
+    <div class="cert-border">
+      <div class="corner-decoration top-left"></div>
+      <div class="corner-decoration top-right"></div>
+      <div class="corner-decoration bottom-left"></div>
+      <div class="corner-decoration bottom-right"></div>
+
+      <div class="logos">
+        <img src="image/perbasi.png" alt="Logo Perbasi" class="logo-img">
+        <img src="image/porprov.png" alt="Logo BK Porprov" class="logo-img">
+        <img src="image/pemkab.png" alt="Logo Pemkab Subang" class="logo-img">
+      </div>
+
+      <h2>SERTIFIKAT</h2>
+      <p class="cert-subtitle">Certificate of Participation</p>
+
+      <p>Diberikan kepada:</p>
+
+      <div class="name-section">
+        <div class="name" id="athleteName">NAMA ATLET</div>
+        <div class="id-number" id="certId">ID: CERT-2025-XXXX</div>
+      </div>
+
+      <p>
+        Yang telah mengikuti dan berpartisipasi dengan penuh dedikasi sebagai<br>
+        <strong>Atlet Cabang Olahraga Bola Basket</strong> dalam ajang:
+      </p>
+
+      <div class="event-box">
+        <h3>BABAK KUALIFIKASI (BK)</h3>
+        <h3>PORPROV JAWA BARAT 2025</h3>
+        <p>Diselenggarakan oleh Komite Olahraga Nasional Indonesia (KONI) Jawa Barat</p>
+      </div>
+
+      <p style="margin-top: 15px; font-style: italic;">
+        Semoga prestasi ini menjadi motivasi untuk terus berprestasi<br>
+        dan mengharumkan nama daerah
+      </p>
+
+      <div class="signature-section">
+        <div class="signature-box">
+          <p>Subang, Februari 2026<br>Ketua PERBASI Kabupaten Subang</p>
+          <img src="image/ttd.png" alt="Tanda Tangan" class="signature-img">
+          <div class="signature-name">AGUS HERMAWAN</div>
+        </div>
+      </div>
+
+      <div class="qr-section">
+        <div class="qr-code" id="qrcode"></div>
+        <div class="qr-label">Scan untuk verifikasi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="print-btn" onclick="window.print()">🖨️ Download / Print PDF</button>
+    <button class="back-btn" onclick="backToSearch()">← Kembali</button>
+  </div>
+</div>
+
+<script>
+  const athletes = [
+    "Arya Putra Aditya",
+    "Muhammad Farid Hakim",
+    "Aldo Romulus Partahi Batubara",
+    "Haikal Priyatna Ramadan",
+    "Muhammad Syauqy Ibnu Rifqi",
+    "Mulky Ahmad Zamzami",
+    "Prabu Daniyal Rayyan Pratama",
+    "Reyza Yoga Prayitno",
+    "Reza Yudistisa",
+    "Rocky Patiar Sihombing",
+    "Tardas Cristopher Hutapea",
+    "Yazid Rizky Ramadhan",
+    "Mochmad Reska Sandia",
+    "Muhammad Dzaky Ahnaf",
+    "Dylan Irji Ghifari"
+  ];
+
+  // Populate athlete list
+  const athleteListUl = document.getElementById('athleteListUl');
+  athletes.forEach(name => {
+    const li = document.createElement('li');
+    li.textContent = name;
+    li.onclick = () => {
+      document.getElementById('searchName').value = name;
+      findCertificate();
+    };
+    athleteListUl.appendChild(li);
+  });
+
+  function toggleList() {
+    const list = document.getElementById('athleteList');
+    list.classList.toggle('show');
+  }
+
+  function showSuggestions() {
+    const input = document.getElementById('searchName').value.trim().toLowerCase();
+    const suggestionsDiv = document.getElementById('suggestions');
+    
+    if (input.length < 2) {
+      suggestionsDiv.style.display = 'none';
+      return;
+    }
+
+    const matches = athletes.filter(name => 
+      name.toLowerCase().includes(input)
+    );
+
+    if (matches.length > 0) {
+      suggestionsDiv.innerHTML = matches.map(name => 
+        `<div onclick="selectName('${name}')">${name}</div>`
+      ).join('');
+      suggestionsDiv.style.display = 'block';
+    } else {
+      suggestionsDiv.style.display = 'none';
+    }
+  }
+
+  function selectName(name) {
+    document.getElementById('searchName').value = name;
+    document.getElementById('suggestions').style.display = 'none';
+    findCertificate();
+  }
+
+  function generateCertId(name) {
+    // Generate unique ID based on name
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = ((hash << 5) - hash) + name.charCodeAt(i);
+      hash = hash & hash;
+    }
+    return 'CERT-2025-' + Math.abs(hash).toString().substring(0, 4).padStart(4, '0');
+  }
+
+  function findCertificate() {
+    const input = document.getElementById("searchName").value.trim();
+    
+    if (!input) {
+      alert("Silakan masukkan nama atlet");
+      return;
+    }
+
+    // Search for exact match first
+    let found = athletes.find(name => 
+      name.toLowerCase() === input.toLowerCase()
+    );
+
+    // If not found, search for partial match
+    if (!found) {
+      const matches = athletes.filter(name => 
+        name.toLowerCase().includes(input.toLowerCase())
+      );
+
+      if (matches.length === 1) {
+        // Only one match found, use it
+        found = matches[0];
+      } else if (matches.length > 1) {
+        // Multiple matches found, show options
+        let options = "Ditemukan beberapa nama:\n\n";
+        matches.forEach((name, index) => {
+          options += `${index + 1}. ${name}\n`;
+        });
+        options += "\nSilakan ketik nama lebih lengkap atau pilih dari daftar atlet.";
+        alert(options);
+        return;
+      }
+    }
+
+    if (found) {
+      // Set athlete name
+      document.getElementById("athleteName").innerText = found;
+      
+      // Generate and set certificate ID
+      const certId = generateCertId(found);
+      document.getElementById("certId").innerText = "ID: " + certId;
+      
+      // Clear previous QR code
+      document.getElementById("qrcode").innerHTML = '';
+      
+      // Generate QR Code
+      const qrData = `SERTIFIKAT BK PORPROV 2025\nNama: ${found}\nID: ${certId}\nCabang: Bola Basket\nVerifikasi: https://porprov-jabar.id/verify/${certId}`;
+      
+      new QRCode(document.getElementById("qrcode"), {
+        text: qrData,
+        width: 100,
+        height: 100,
+        colorDark: "#0d47a1",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      
+      // Show certificate
+      document.getElementById("certificateWrapper").style.display = "block";
+      
+      // Scroll to certificate
+      setTimeout(() => {
+        document.getElementById("certificateWrapper").scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }, 100);
+      
+    } else {
+      alert("❌ Nama tidak ditemukan!\n\nPastikan nama sesuai dengan daftar atlet.\nKlik 'Lihat Daftar Atlet' untuk melihat nama yang terdaftar.");
+    }
+  }
+
+  function backToSearch() {
+    document.getElementById("certificateWrapper").style.display = "none";
+    document.getElementById("searchName").value = "";
+    document.getElementById("suggestions").style.display = "none";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Allow Enter key to search
+  document.getElementById("searchName").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      findCertificate();
+    }
+  });
+</script>
+
+</body>
+</html>
