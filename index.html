@@ -1,1108 +1,1130 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sertifikat BK PORPROV Jabar 2025</title>
-  
-  <!-- QR Code Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <!-- html2canvas for PDF generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- jsPDF for PDF creation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0a2540 0%, #1a4d7a 100%);
-      min-height: 100vh;
-      padding: 15px;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 8px;
-      background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
-    }
-
-    body::after {
-      content: 'PERBASI KAB.SUBANG';
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.15);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      z-index: 1;
-    }
-
-    header {
-      background: linear-gradient(135deg, #003d82 0%, #0056b3 100%);
-      backdrop-filter: blur(10px);
-      padding: 25px 20px;
-      border-radius: 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      margin-bottom: 25px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      border-top: 4px solid #ffd700;
-      border-bottom: 4px solid #ffd700;
-      position: relative;
-      z-index: 10;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .header-logo {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .header-text {
-      flex: 1;
-      min-width: 200px;
-      text-align: center;
-    }
-
-    header h1 {
-      color: #ffffff;
-      font-size: 24px;
-      margin-bottom: 10px;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    header p {
-      color: #e8f4f8;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 400;
-    }
-
-    .search-container {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 250, 255, 0.98) 100%);
-      backdrop-filter: blur(10px);
-      padding: 30px 25px;
-      border-radius: 8px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      max-width: 650px;
-      margin: 0 auto 25px;
-      border: 2px solid #0056b3;
-      border-top: 5px solid #ffd700;
-      position: relative;
-      z-index: 10;
-    }
-
-    .search-container h2 {
-      color: #003d82;
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 22px;
-      text-shadow: none;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-    }
-
-    input {
-      flex: 1;
-      min-width: 200px;
-      padding: 14px 18px;
-      border-radius: 6px;
-      border: 2px solid #0056b3;
-      font-size: 15px;
-      transition: all 0.3s ease;
-      background: #ffffff;
-      color: #1a1a1a;
-    }
-
-    input::placeholder {
-      color: #6c757d;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #003d82;
-      box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.15);
-      background: #ffffff;
-      transform: translateY(-1px);
-    }
-
-    button {
-      padding: 14px 28px;
-      border: none;
-      border-radius: 6px;
-      background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0, 61, 130, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 61, 130, 0.4);
-      background: linear-gradient(135deg, #004999 0%, #002f66 100%);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .athlete-list {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
-
-    .athlete-list.show {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .athlete-list h3 {
-      color: #003d82;
-      margin-bottom: 12px;
-      font-size: 14px;
-      text-shadow: none;
-      font-weight: 600;
-    }
-
-    .athlete-list ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .athlete-list li {
-      padding: 12px 15px;
-      background: #ffffff;
-      margin-bottom: 6px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: #1a1a1a;
-      border: 1px solid #dee2e6;
-    }
-
-    .athlete-list li:hover {
-      background: #e8f4f8;
-      border-color: #0056b3;
-      transform: translateX(5px);
-      color: #003d82;
-      box-shadow: 0 2px 8px rgba(0, 86, 179, 0.15);
-    }
-
-    .toggle-list {
-      background: #ffffff;
-      color: #003d82;
-      border: 2px solid #0056b3;
-      padding: 12px 20px;
-      font-size: 14px;
-      margin-top: 15px;
-      width: 100%;
-      font-weight: 600;
-    }
-
-    .toggle-list:hover {
-      background: #e8f4f8;
-      border-color: #003d82;
-    }
-
-    /* Certificate Styles - Optimized for A4 Landscape */
-    .certificate-wrapper {
-      display: none;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-    }
-
-    .certificate {
-      background: white;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px;
-      border-radius: 0;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: visible;
-    }
-
-    .certificate::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 10px;
-      background: linear-gradient(90deg, #0d47a1, #1976d2, #0d47a1);
-    }
-
-    .certificate::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 10px;
-      background: linear-gradient(90deg, #0d47a1, #1976d2, #0d47a1);
-    }
-
-    .cert-border {
-      border: 3px solid #0d47a1;
-      padding: 25px 35px;
-      border-radius: 0;
-      position: relative;
-      background: white;
-    }
-
-    .corner-decoration {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border: 3px solid #ffd700;
-    }
-
-    .corner-decoration.top-left {
-      top: 8px;
-      left: 8px;
-      border-right: none;
-      border-bottom: none;
-    }
-
-    .corner-decoration.top-right {
-      top: 8px;
-      right: 8px;
-      border-left: none;
-      border-bottom: none;
-    }
-
-    .corner-decoration.bottom-left {
-      bottom: 8px;
-      left: 8px;
-      border-right: none;
-      border-top: none;
-    }
-
-    .corner-decoration.bottom-right {
-      bottom: 8px;
-      right: 8px;
-      border-left: none;
-      border-top: none;
-    }
-
-    .logos {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-bottom: 20px;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .logo-img {
-      width: 85px;
-      height: 85px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .certificate h2 {
-      text-align: center;
-      font-size: 28px;
-      color: #0d47a1;
-      margin: 15px 0 5px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      font-weight: 800;
-    }
-
-    .cert-subtitle {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 18px;
-      font-style: italic;
-    }
-
-    .certificate p {
-      text-align: center;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #333;
-      margin: 8px 0;
-    }
-
-    .name-section {
-      text-align: center;
-      margin: 15px auto;
-      padding: 12px 20px;
-      background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
-      border-radius: 8px;
-      border-left: 4px solid #0d47a1;
-      max-width: 600px;
-    }
-
-    .name {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0d47a1;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 5px;
-      word-wrap: break-word;
-    }
-
-    .id-number {
-      font-size: 11px;
-      color: #666;
-      font-family: 'Courier New', monospace;
-    }
-
-    .event-box {
-      background: #0d47a1;
-      color: white;
-      padding: 12px 15px;
-      border-radius: 8px;
-      margin: 15px auto;
-      text-align: center;
-      max-width: 700px;
-    }
-
-    .event-box h3 {
-      font-size: 16px;
-      margin-bottom: 5px;
-      letter-spacing: 0.5px;
-    }
-
-    .event-box p {
-      color: #e3f2fd;
-      font-size: 12px;
-      margin: 0;
-    }
-
-    .motivation-text {
-      margin-top: 12px;
-      font-style: italic;
-      font-size: 12px;
-      color: #555;
-    }
-
-    .bottom-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 25px;
-      gap: 20px;
-    }
-
-    .signature-section {
-      flex: 1;
-      text-align: left;
-      padding-left: 20px;
-    }
-
-    .signature-box {
-      text-align: center;
-      max-width: 220px;
-    }
-
-    .signature-box p {
-      font-size: 11px;
-      color: #666;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .signature-img {
-      width: 130px;
-      height: 65px;
-      object-fit: contain;
-      margin: 8px auto;
-      display: block;
-    }
-
-    .signature-name {
-      font-weight: bold;
-      color: #0d47a1;
-      font-size: 12px;
-      margin-top: 5px;
-      text-decoration: underline;
-      text-align: center;
-    }
-
-    .qr-section {
-      text-align: center;
-      flex-shrink: 0;
-      padding-right: 20px;
-    }
-
-    .qr-code {
-      background: white;
-      padding: 5px;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: inline-block;
-      border: 2px solid #0d47a1;
-    }
-
-    .qr-code canvas,
-    .qr-code img {
-      display: block !important;
-      margin: 0 auto;
-    }
-
-    .qr-label {
-      font-size: 9px;
-      color: #666;
-      margin-top: 5px;
-      text-align: center;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .download-btn {
-      background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
-      padding: 12px 30px;
-      font-size: 15px;
-      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-    }
-
-    .download-btn:hover {
-      background: linear-gradient(135deg, #218838 0%, #1a6928 100%);
-      box-shadow: 0 6px 18px rgba(40, 167, 69, 0.4);
-    }
-
-    .back-btn {
-      background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-      padding: 12px 30px;
-      font-size: 15px;
-      box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-    }
-
-    .back-btn:hover {
-      background: linear-gradient(135deg, #5a6268 0%, #3d4247 100%);
-      box-shadow: 0 6px 18px rgba(108, 117, 125, 0.4);
-    }
-
-    /* Suggestions styling */
-    #suggestions {
-      display: none;
-      margin-top: 10px;
-      background: #ffffff;
-      border-radius: 6px;
-      padding: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-      border: 2px solid #0056b3;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    #suggestions > div {
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-bottom: 5px;
-      background: #f8f9fa;
-      color: #1a1a1a;
-      transition: all 0.2s ease;
-      border: 1px solid #dee2e6;
-    }
-
-    #suggestions > div:hover {
-      background: #e8f4f8;
-      border-color: #0056b3;
-      color: #003d82;
-    }
-
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #e9ecef;
-      border-radius: 5px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #0056b3;
-      border-radius: 5px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #003d82;
-    }
-
-    /* Responsive Styles */
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-      }
-      
-      .certificate {
-        box-shadow: none;
-        page-break-inside: avoid;
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 10px;
-      }
-
-      header {
-        padding: 20px 15px;
-      }
-
-      .header-content {
-        gap: 12px;
-      }
-
-      .header-logo {
-        width: 70px;
-        height: 70px;
-      }
-
-      header h1 {
-        font-size: 18px;
-        line-height: 1.3;
-      }
-
-      header p {
-        font-size: 12px;
-        line-height: 1.4;
-      }
-
-      .search-container {
-        padding: 20px 15px;
-      }
-
-      .search-container h2 {
-        font-size: 18px;
-      }
-
-      .search-box {
-        flex-direction: column;
-      }
-
-      input {
-        width: 100%;
-        min-width: 100%;
-        padding: 12px 15px;
-        font-size: 14px;
-      }
-
-      button {
-        width: 100%;
-        padding: 12px 20px;
-        font-size: 14px;
-      }
-
-      .certificate {
-        padding: 20px 15px;
-      }
-
-      .cert-border {
-        padding: 18px 15px;
-      }
-
-      .corner-decoration {
-        width: 25px;
-        height: 25px;
-      }
-
-      .logos {
-        gap: 8px;
-      }
-
-      .logo-img {
-        width: 60px;
-        height: 60px;
-      }
-
-      .certificate h2 {
-        font-size: 20px;
-        letter-spacing: 1.5px;
-      }
-
-      .cert-subtitle {
-        font-size: 12px;
-      }
-
-      .certificate p {
-        font-size: 11px;
-      }
-
-      .name {
-        font-size: 17px;
-      }
-
-      .id-number {
-        font-size: 10px;
-      }
-
-      .event-box h3 {
-        font-size: 13px;
-      }
-
-      .event-box p {
-        font-size: 10px;
-      }
-
-      .bottom-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .signature-section {
-        padding-left: 0;
-      }
-
-      .qr-section {
-        padding-right: 0;
-      }
-
-      .signature-img {
-        width: 110px;
-        height: 55px;
-      }
-
-      .signature-name {
-        font-size: 11px;
-      }
-
-      .signature-box p {
-        font-size: 10px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .download-btn, .back-btn {
-        width: 100%;
-        padding: 14px;
-      }
-
-      .athlete-list li {
-        font-size: 13px;
-        padding: 10px 12px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .certificate h2 {
-        font-size: 18px;
-      }
-
-      .name {
-        font-size: 15px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertifikat BK PORPROV Jabar 2025 – PERBASI Kab. Subang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root {
+  --navy: #0a1f44;
+  --blue: #1a4480;
+  --blue-mid: #1d5fa6;
+  --gold: #c8972a;
+  --gold-light: #e8b84b;
+  --gold-pale: #f5e9cc;
+  --white: #ffffff;
+  --text-dark: #0a1f44;
+  --text-muted: #5a6a85;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--navy);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(200,151,42,0.04) 0, rgba(200,151,42,0.04) 1px, transparent 0, transparent 50%),
+    repeating-linear-gradient(-45deg, rgba(200,151,42,0.04) 0, rgba(200,151,42,0.04) 1px, transparent 0, transparent 50%);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(180deg, #0d2550 0%, #112d5e 100%);
+  padding: 28px 20px 24px;
+  text-align: center;
+  border-bottom: 3px solid var(--gold);
+  position: relative;
+  animation: fadeDown 0.6s var(--ease-out) both;
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--gold-light);
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.header-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.header-logo {
+  width: 52px; height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  animation: scalePop 0.5s var(--ease-out) 0.2s both;
+}
+
+.header-logo:nth-child(2) { animation-delay: 0.32s; }
+
+@keyframes scalePop {
+  from { opacity: 0; transform: scale(0.72); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.site-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  animation: fadeUp 0.5s var(--ease-out) 0.35s both;
+}
+
+.site-header .sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  animation: fadeUp 0.5s var(--ease-out) 0.45s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SEARCH PANEL ── */
+.search-panel {
+  background: var(--white);
+  margin: 20px 16px;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  border: 1px solid rgba(200,151,42,0.2);
+  animation: fadeUp 0.55s var(--ease-out) 0.5s both;
+}
+
+.search-panel h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.search-field {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.search-field input {
+  flex: 1;
+  height: 48px;
+  padding: 0 16px;
+  border: 2px solid #dde3ee;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  color: var(--text-dark);
+  background: #f8faff;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  outline: none;
+}
+
+.search-field input::placeholder { color: #9aa5be; }
+.search-field input:focus {
+  border-color: var(--blue-mid);
+  box-shadow: 0 0 0 3px rgba(29,95,166,0.12);
+  background: var(--white);
+}
+
+.btn-search {
+  height: 48px;
+  padding: 0 18px;
+  background: var(--navy);
+  color: var(--gold-light);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.15s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-search svg { transition: transform 0.2s var(--ease-out); }
+.btn-search:hover { background: var(--blue); }
+.btn-search:hover svg { transform: scale(1.15); }
+.btn-search:active { transform: scale(0.94); }
+
+/* ── SUGGESTIONS ── */
+.suggestions {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  background: var(--white);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  margin-bottom: 0;
+  box-shadow: 0 4px 16px rgba(10,31,68,0);
+  transition:
+    max-height 0.35s var(--ease-out),
+    opacity 0.25s ease,
+    margin-bottom 0.3s ease,
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.suggestions.open {
+  max-height: 260px;
+  opacity: 1;
+  margin-bottom: 12px;
+  border-color: #dde3ee;
+  box-shadow: 0 4px 16px rgba(10,31,68,0.1);
+}
+
+.suggestion-item {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-dark);
+  cursor: pointer;
+  border-bottom: 1px solid #f0f3f9;
+  transition: background 0.18s, padding-left 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.suggestion-item::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-right: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(-45deg);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.suggestion-item:last-child { border-bottom: none; }
+.suggestion-item:hover { background: #f0f6ff; padding-left: 20px; }
+
+/* ── ERROR MSG ── */
+.error-msg {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  background: #fff0f0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-size: 13px;
+  color: #c0392b;
+  text-align: center;
+  transition: max-height 0.3s var(--ease-out), opacity 0.25s ease, padding 0.3s, border-color 0.25s, margin-top 0.25s;
+  margin-top: 0;
+}
+
+.error-msg.show {
+  max-height: 60px;
+  opacity: 1;
+  padding: 12px 16px;
+  border-color: #ffa5a5;
+  margin-top: 10px;
+}
+
+/* ── TOGGLE LIST BUTTON ── */
+.btn-toggle {
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  border: 1.5px solid #dde3ee;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-toggle:hover { border-color: var(--blue-mid); color: var(--blue); background: #f0f6ff; }
+
+.btn-toggle svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.btn-toggle.open svg { transform: rotate(180deg); }
+
+/* ── ATHLETE LIST ── */
+.athlete-list {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  border-top: 1px solid transparent;
+  padding-top: 0;
+  transition:
+    max-height 0.45s var(--ease-out),
+    opacity 0.3s ease,
+    padding-top 0.35s ease,
+    border-color 0.3s,
+    margin-top 0.3s;
+  margin-top: 0;
+}
+
+.athlete-list.open {
+  max-height: 600px;
+  opacity: 1;
+  padding-top: 12px;
+  border-top-color: #eef0f5;
+  margin-top: 12px;
+}
+
+.athlete-list-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.athlete-item {
+  padding: 11px 14px;
+  background: #f8faff;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--text-dark);
+  cursor: pointer;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.athlete-item::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.athlete-item:hover {
+  background: #e8f0ff;
+  border-color: #c0d3f0;
+  color: var(--navy);
+  transform: translateX(4px);
+}
+
+.athlete-item:hover::before { transform: scale(1.4); }
+
+/* ── CERTIFICATE WRAPPER ── */
+.cert-wrapper {
+  display: none;
+  margin: 0 0 24px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.cert-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cert-preview-card {
+  background: var(--white);
+  margin: 0 16px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.35);
+  border: 1px solid rgba(200,151,42,0.25);
+}
+
+.cert-preview-card .strip-top {
+  height: 8px;
+  background: repeating-linear-gradient(90deg, var(--navy) 0px, var(--navy) 20px, var(--gold) 20px, var(--gold) 22px);
+}
+
+.cert-preview-body {
+  padding: 22px 20px 20px;
+}
+
+/* ── Staggered cert reveal ── */
+.cert-preview-card .cert-logos-row  { animation: none; }
+.cert-preview-card .cert-title-block{ animation: none; }
+
+.cert-row-anim {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 0.45s var(--ease-out) forwards;
+}
+
+.cert-logos-row   { animation-delay: 0.05s; }
+.cert-title-block { animation-delay: 0.12s; }
+.cert-divider     { animation-delay: 0.18s; }
+.cert-given-to    { animation-delay: 0.22s; }
+.cert-name-block  { animation-delay: 0.28s; }
+.cert-participation{ animation-delay: 0.33s; }
+.cert-event-box   { animation-delay: 0.38s; }
+.cert-motto       { animation-delay: 0.44s; }
+.cert-bottom      { animation-delay: 0.5s; }
+
+.cert-logos-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.cert-logo { width: 48px; height: 48px; object-fit: contain; }
+
+.cert-title-block { text-align: center; margin-bottom: 14px; }
+
+.cert-kw {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.cert-headline {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--navy);
+  letter-spacing: 2px;
+}
+
+.cert-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+.cert-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.cert-divider::before,
+.cert-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.cert-divider span { color: var(--gold); font-size: 14px; }
+
+.cert-given-to {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.cert-name-block {
+  background: linear-gradient(135deg, #f0f6ff 0%, #fffcf0 100%);
+  border: 1.5px solid var(--gold-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.cert-name-block::before,
+.cert-name-block::after {
+  content: '◆';
+  position: absolute;
+  color: var(--gold);
+  font-size: 8px;
+  top: 8px;
+}
+.cert-name-block::before { left: 10px; }
+.cert-name-block::after  { right: 10px; }
+
+.cert-name {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.cert-id {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+.cert-participation {
+  text-align: center;
+  font-size: 11.5px;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.cert-participation strong { color: var(--navy); font-weight: 700; }
+
+.cert-event-box {
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cert-event-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+
+.cert-event-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+
+.cert-event-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.cert-event-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.3px;
+}
+
+.cert-motto {
+  text-align: center;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.cert-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.cert-sig { flex: 1; }
+
+.cert-sig-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.cert-sig-img {
+  width: 110px; height: 55px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 4px;
+}
+
+.cert-sig-name {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--gold);
+}
+
+.cert-qr { text-align: center; flex-shrink: 0; }
+
+.cert-qr-box {
+  display: inline-block;
+  padding: 6px;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  background: white;
+}
+
+.cert-qr-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: center;
+}
+
+.cert-preview-card .strip-bottom {
+  height: 8px;
+  background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 20px, var(--navy) 20px, var(--navy) 22px);
+}
+
+/* ── ACTION BUTTONS ── */
+.action-row {
+  display: flex;
+  gap: 10px;
+  padding: 16px 16px 0;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.4s var(--ease-out) 0.6s forwards;
+}
+
+.btn-download {
+  flex: 1;
+  height: 50px;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s var(--ease-out), box-shadow 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 12px rgba(200,151,42,0.3);
+}
+
+.btn-download:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(200,151,42,0.4);
+}
+
+.btn-download:active { transform: scale(0.97); box-shadow: none; }
+.btn-download:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* spinning loader for dl button */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin-icon { animation: spin 0.8s linear infinite; }
+
+/* success checkmark draw */
+@keyframes checkDraw {
+  from { stroke-dashoffset: 30; opacity: 0; }
+  to   { stroke-dashoffset: 0;  opacity: 1; }
+}
+.check-icon polyline {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: checkDraw 0.4s var(--ease-out) forwards;
+}
+
+.btn-back {
+  height: 50px;
+  padding: 0 20px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s var(--ease-out);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-back svg { transition: transform 0.25s var(--ease-out); }
+.btn-back:hover { background: rgba(255,255,255,0.14); color: white; border-color: rgba(255,255,255,0.3); }
+.btn-back:hover svg { transform: translateX(-3px); }
+.btn-back:active { transform: scale(0.97); }
+
+/* ── PANEL TRANSITIONS ── */
+.panel-hide {
+  animation: panelOut 0.3s var(--ease-in-out) forwards;
+}
+
+.panel-show {
+  animation: panelIn 0.4s var(--ease-out) forwards;
+}
+
+@keyframes panelOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-12px) scale(0.97); }
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center;
+  padding: 20px 16px 32px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1px;
+}
+
+/* ══ PRINT — A4 Landscape ══ */
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  body { background: white !important; }
+  body::before { display: none; }
+  .app { max-width: none; }
+
+  .site-header, .search-panel, .action-row, .site-footer, #printableArea { display: none !important; }
+
+  .cert-wrapper {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  .cert-row-anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+
+  .cert-preview-card {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .strip-top, .strip-bottom { height: 12px !important; }
+
+  .cert-preview-body {
+    flex: 1;
+    padding: 16mm 22mm !important;
+    display: grid;
+    grid-template-rows: auto auto auto auto 1fr auto auto auto auto;
+    gap: 3mm;
+  }
+
+  .cert-logos-row { margin-bottom: 0 !important; }
+  .cert-logo { width: 60px !important; height: 60px !important; }
+  .cert-headline { font-size: 36px !important; }
+  .cert-name { font-size: 28px !important; }
+  .cert-event-title { font-size: 17px !important; }
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+::-webkit-scrollbar-thumb { background: rgba(200,151,42,0.4); border-radius: 3px; }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="header-content">
-    <img src="image/jangan.png" alt="Logo" class="header-logo">
-    <div class="header-text">
-      <h1>Sertifikat Keikutsertaan Atlet</h1>
-      <p>Babak Kualifikasi PORPROV Jawa Barat 2025 - Cabang Bola Basket</p>
+<div id="printableArea" style="display:none;"></div>
+
+<div class="app">
+
+  <header class="site-header">
+    <div class="header-logos">
+      <img src="image/jangan.png" alt="Logo PERBASI" class="header-logo">
+      <img src="image/jangan (1).png" alt="Logo Subang" class="header-logo">
     </div>
-    <img src="image/jangan (1).png" alt="Logo" class="header-logo">
+    <h1>Sertifikat Keikutsertaan Atlet</h1>
+    <p class="sub">Babak Kualifikasi PORPROV Jabar 2025 · Bola Basket</p>
+  </header>
+
+  <div class="search-panel" id="searchPanel">
+    <h2>Cari Sertifikat Anda</h2>
+
+    <div class="search-field">
+      <input type="text" id="searchName" placeholder="Ketik nama lengkap atlet…" autocomplete="off" oninput="showSuggestions()">
+      <button class="btn-search" onclick="findCertificate()" title="Cari" aria-label="Cari">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="suggestions" id="suggestions"></div>
+    <div class="error-msg" id="errorMsg"></div>
+
+    <button class="btn-toggle" id="toggleBtn" onclick="toggleList()">
+      <svg id="toggleIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+        <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+      </svg>
+      <span id="toggleLabel">Lihat Daftar Atlet</span>
+    </button>
+
+    <div class="athlete-list" id="athleteList">
+      <p class="athlete-list-label">Atlet Terdaftar</p>
+      <div id="athleteListItems"></div>
+    </div>
   </div>
-</header>
 
-<div class="search-container">
-  <h2>Cari Sertifikat Anda</h2>
-  <div class="search-box">
-    <input type="text" id="searchName" placeholder="Masukkan nama lengkap atlet..." oninput="showSuggestions()">
-    <button onclick="findCertificate()">🔍 Cari</button>
-  </div>
-  
-  <div id="suggestions"></div>
-  
-  <button class="toggle-list" onclick="toggleList()">📋 Lihat Daftar Atlet</button>
-  
-  <div class="athlete-list" id="athleteList">
-    <h3>Daftar Atlet Terdaftar:</h3>
-    <ul id="athleteListUl"></ul>
-  </div>
-</div>
+  <div class="cert-wrapper" id="certWrapper">
 
-<div class="certificate-wrapper" id="certificateWrapper">
-  <div class="certificate" id="certificateContent">
-    <div class="cert-border">
-      <div class="corner-decoration top-left"></div>
-      <div class="corner-decoration top-right"></div>
-      <div class="corner-decoration bottom-left"></div>
-      <div class="corner-decoration bottom-right"></div>
+    <div class="cert-preview-card" id="certCard">
+      <div class="strip-top"></div>
 
-      <div class="logos">
-        <img src="image/perbasi.png" alt="Logo Perbasi" class="logo-img">
-        <img src="image/porprov.png" alt="Logo BK Porprov" class="logo-img">
-        <img src="image/pemkab.png" alt="Logo Pemkab Subang" class="logo-img">
-      </div>
+      <div class="cert-preview-body">
 
-      <h2>SERTIFIKAT</h2>
-      <p class="cert-subtitle">Certificate of Participation</p>
+        <div class="cert-logos-row cert-row-anim">
+          <img src="image/perbasi.png" alt="PERBASI" class="cert-logo">
+          <img src="image/porprov.png" alt="PORPROV" class="cert-logo">
+          <img src="image/pemkab.png" alt="Pemkab Subang" class="cert-logo">
+        </div>
 
-      <p>Diberikan kepada:</p>
+        <div class="cert-title-block cert-row-anim">
+          <p class="cert-kw">Certificate of Participation</p>
+          <h2 class="cert-headline">SERTIFIKAT</h2>
+          <p class="cert-sub">Keikutsertaan Atlet Resmi</p>
+        </div>
 
-      <div class="name-section">
-        <div class="name" id="athleteName">NAMA ATLET</div>
-        <div class="id-number" id="certId">ID: CERT-2025-XXXX</div>
-      </div>
+        <div class="cert-divider cert-row-anim"><span>✦</span></div>
 
-      <p>
-        Yang telah mengikuti dan berpartisipasi dengan penuh dedikasi sebagai<br>
-        <strong>Atlet Cabang Olahraga Bola Basket</strong> dalam ajang:
-      </p>
+        <p class="cert-given-to cert-row-anim">Diberikan kepada:</p>
 
-      <div class="event-box">
-        <h3>BABAK KUALIFIKASI (BK)</h3>
-        <h3>PORPROV JAWA BARAT 2025</h3>
-        <p>Diselenggarakan oleh Komite Olahraga Nasional Indonesia (KONI) Jawa Barat</p>
-      </div>
+        <div class="cert-name-block cert-row-anim">
+          <div class="cert-name" id="certName">NAMA ATLET</div>
+          <div class="cert-id" id="certId">ID: CERT-2025-XXXX</div>
+        </div>
 
-      <p class="motivation-text">
-        Semoga prestasi ini menjadi motivasi untuk terus berprestasi<br>
-        dan mengharumkan nama daerah
-      </p>
+        <p class="cert-participation cert-row-anim">
+          Yang telah berpartisipasi dengan penuh dedikasi sebagai<br>
+          <strong>Atlet Cabang Olahraga Bola Basket</strong> dalam ajang:
+        </p>
 
-      <div class="bottom-section">
-        <div class="signature-section">
-          <div class="signature-box">
-            <p>Subang, Februari 2026<br>Ketua PERBASI Kabupaten Subang</p>
-            <img src="image/ttd.png" alt="Tanda Tangan" class="signature-img">
-            <div class="signature-name">AGUS HERMAWAN</div>
+        <div class="cert-event-box cert-row-anim">
+          <div class="cert-event-title">BABAK KUALIFIKASI (BK)<br>PEKAN OLAHRAGA PROVINSI (PORPROV) JAWA BARAT 2025</div>
+          <div class="cert-event-sub">Diselenggarakan oleh KONI Jawa Barat</div>
+        </div>
+
+        <p class="cert-motto cert-row-anim">
+          Semoga prestasi ini menjadi motivasi untuk terus berprestasi<br>
+          dan mengharumkan nama daerah Kabupaten Subang
+        </p>
+
+        <div class="cert-bottom cert-row-anim">
+          <div class="cert-sig">
+            <p class="cert-sig-label">Subang, Februari 2026<br>Ketua PERBASI Kabupaten Subang</p>
+            <img src="image/ttd.png" alt="Tanda Tangan" class="cert-sig-img">
+            <div class="cert-sig-name">AGUS HERMAWAN</div>
+          </div>
+          <div class="cert-qr">
+            <div class="cert-qr-box" id="qrcode"></div>
+            <p class="cert-qr-label">Scan verifikasi</p>
           </div>
         </div>
 
-        <div class="qr-section">
-          <div class="qr-code" id="qrcode"></div>
-          <div class="qr-label">Scan untuk verifikasi</div>
-        </div>
       </div>
+      <div class="strip-bottom"></div>
     </div>
+
+    <div class="action-row">
+      <button class="btn-download" id="downloadBtn" onclick="downloadPDF()">
+        <svg id="dlIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span id="dlLabel">Unduh PDF</span>
+      </button>
+      <button class="btn-back" onclick="backToSearch()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Kembali
+      </button>
+    </div>
+
   </div>
 
-  <div class="action-buttons">
-    <button class="download-btn" id="downloadBtn" onclick="downloadCertificate()">📥 Download PDF</button>
-    <button class="back-btn" onclick="backToSearch()">← Kembali</button>
-  </div>
+  <div class="site-footer">PERBASI KAB. SUBANG · 2025</div>
+
 </div>
 
 <script>
-  const athletes = [
-    "Arya Putra Aditya",
-    "Muhammad Farid Hakim",
-    "Aldo Romulus Partahi Batubara",
-    "Haikal Priyatna Ramadan",
-    "Muhammad Syauqy Ibnu Rifqi",
-    "Mulky Ahmad Zamzami",
-    "Prabu Daniyal Rayyan Pratama",
-    "Reyza Yoga Prayitno",
-    "Reza Yudistisa",
-    "Rocky Patiar Sihombing",
-    "Tardas Cristopher Hutapea",
-    "Yazid Rizky Ramadhan",
-    "Mochmad Reska Sandia",
-    "Muhammad Dzaky Ahnaf",
-    "Dylan Irji Ghifari"
-  ];
+const athletes = [
+  "Arya Putra Aditya",
+  "Muhammad Farid Hakim",
+  "Aldo Romulus Partahi Batubara",
+  "Haikal Priyatna Ramadan",
+  "Muhammad Syauqy Ibnu Rifqi",
+  "Mulky Ahmad Zamzami",
+  "Prabu Daniyal Rayyan Pratama",
+  "Reyza Yoga Prayitno",
+  "Reza Yudistisa",
+  "Rocky Patiar Sihombing",
+  "Tardas Cristopher Hutapea",
+  "Yazid Rizky Ramadhan",
+  "Mochmad Reska Sandia",
+  "Muhammad Dzaky Ahnaf",
+  "Dylan Irji Ghifari"
+];
 
-  // Populate athlete list
-  const athleteListUl = document.getElementById('athleteListUl');
-  athletes.forEach(name => {
-    const li = document.createElement('li');
-    li.textContent = name;
-    li.onclick = () => {
-      document.getElementById('searchName').value = name;
-      findCertificate();
-    };
-    athleteListUl.appendChild(li);
+const listEl = document.getElementById('athleteListItems');
+athletes.forEach(name => {
+  const d = document.createElement('div');
+  d.className = 'athlete-item';
+  d.textContent = name;
+  d.onclick = () => { document.getElementById('searchName').value = name; findCertificate(); };
+  listEl.appendChild(d);
+});
+
+function toggleList() {
+  const list = document.getElementById('athleteList');
+  const btn  = document.getElementById('toggleBtn');
+  const isOpen = list.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  document.getElementById('toggleLabel').textContent = isOpen ? 'Tutup Daftar' : 'Lihat Daftar Atlet';
+}
+
+function showSuggestions() {
+  const val = document.getElementById('searchName').value.trim().toLowerCase();
+  const box = document.getElementById('suggestions');
+  hideError();
+  if (val.length < 2) { box.classList.remove('open'); return; }
+  const hits = athletes.filter(n => n.toLowerCase().includes(val));
+  if (!hits.length) { box.classList.remove('open'); return; }
+  box.innerHTML = hits.map(n =>
+    `<div class="suggestion-item" onclick="selectName('${n.replace(/'/g,"\\'")}')"> ${n}</div>`
+  ).join('');
+  box.classList.add('open');
+}
+
+function selectName(name) {
+  document.getElementById('searchName').value = name;
+  document.getElementById('suggestions').classList.remove('open');
+  findCertificate();
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function hideError() {
+  document.getElementById('errorMsg').classList.remove('show');
+}
+
+function genId(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) { h = ((h << 5) - h) + name.charCodeAt(i); h = h & h; }
+  return 'CERT-2025-' + Math.abs(h).toString().padStart(4,'0').slice(-4);
+}
+
+function findCertificate() {
+  const val = document.getElementById('searchName').value.trim();
+  document.getElementById('suggestions').classList.remove('open');
+  hideError();
+
+  if (!val) { showError('Silakan masukkan nama atlet terlebih dahulu.'); return; }
+
+  let found = athletes.find(n => n.toLowerCase() === val.toLowerCase());
+  if (!found) {
+    const hits = athletes.filter(n => n.toLowerCase().includes(val.toLowerCase()));
+    if (hits.length === 1) found = hits[0];
+    else if (hits.length > 1) { showError('Ditemukan beberapa nama. Ketik lebih lengkap atau pilih dari daftar.'); return; }
+  }
+
+  if (!found) { showError('Nama tidak ditemukan. Periksa ejaan atau pilih dari daftar atlet.'); return; }
+
+  const id = genId(found);
+  document.getElementById('certName').textContent = found;
+  document.getElementById('certId').textContent = 'ID: ' + id;
+
+  const qrEl = document.getElementById('qrcode');
+  qrEl.innerHTML = '';
+  new QRCode(qrEl, {
+    text: `BK PORPROV JABAR 2025\nNama: ${found}\nID: ${id}\nCabang: Bola Basket`,
+    width: 80, height: 80,
+    colorDark: '#0a1f44', colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
   });
 
-  function toggleList() {
-    const list = document.getElementById('athleteList');
-    list.classList.toggle('show');
-  }
+  // Animate panel out, then show cert
+  const panel = document.getElementById('searchPanel');
+  panel.classList.add('panel-hide');
 
-  function showSuggestions() {
-    const input = document.getElementById('searchName').value.trim().toLowerCase();
-    const suggestionsDiv = document.getElementById('suggestions');
-    
-    if (input.length < 2) {
-      suggestionsDiv.style.display = 'none';
-      return;
-    }
+  setTimeout(() => {
+    panel.style.display = 'none';
+    panel.classList.remove('panel-hide');
 
-    const matches = athletes.filter(name => 
-      name.toLowerCase().includes(input)
-    );
+    const wrapper = document.getElementById('certWrapper');
+    wrapper.style.display = 'block';
 
-    if (matches.length > 0) {
-      suggestionsDiv.innerHTML = matches.map(name => 
-        `<div onclick="selectName('${name}')">${name}</div>`
-      ).join('');
-      suggestionsDiv.style.display = 'block';
-    } else {
-      suggestionsDiv.style.display = 'none';
-    }
-  }
+    // Trigger stagger animations by resetting cert-row-anim
+    wrapper.querySelectorAll('.cert-row-anim').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // reflow
+      el.style.animation = '';
+    });
 
-  function selectName(name) {
-    document.getElementById('searchName').value = name;
-    document.getElementById('suggestions').style.display = 'none';
-    findCertificate();
-  }
-
-  function generateCertId(name) {
-    // Generate unique ID based on name
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = ((hash << 5) - hash) + name.charCodeAt(i);
-      hash = hash & hash;
-    }
-    return 'CERT-2025-' + Math.abs(hash).toString().substring(0, 4).padStart(4, '0');
-  }
-
-  function findCertificate() {
-    const input = document.getElementById("searchName").value.trim();
-    
-    if (!input) {
-      alert("Silakan masukkan nama atlet");
-      return;
-    }
-
-    // Search for exact match first
-    let found = athletes.find(name => 
-      name.toLowerCase() === input.toLowerCase()
-    );
-
-    // If not found, search for partial match
-    if (!found) {
-      const matches = athletes.filter(name => 
-        name.toLowerCase().includes(input.toLowerCase())
-      );
-
-      if (matches.length === 1) {
-        // Only one match found, use it
-        found = matches[0];
-      } else if (matches.length > 1) {
-        // Multiple matches found, show options
-        let options = "Ditemukan beberapa nama:\n\n";
-        matches.forEach((name, index) => {
-          options += `${index + 1}. ${name}\n`;
-        });
-        options += "\nSilakan ketik nama lebih lengkap atau pilih dari daftar atlet.";
-        alert(options);
-        return;
-      }
-    }
-
-    if (found) {
-      // Set athlete name
-      document.getElementById("athleteName").innerText = found;
-      
-      // Generate and set certificate ID
-      const certId = generateCertId(found);
-      document.getElementById("certId").innerText = "ID: " + certId;
-      
-      // Clear previous QR code
-      const qrcodeDiv = document.getElementById("qrcode");
-      qrcodeDiv.innerHTML = '';
-      
-      // Generate QR Code
-      const qrData = `SERTIFIKAT BK PORPROV 2025\nNama: ${found}\nID: ${certId}\nCabang: Bola Basket\nVerifikasi: https://porprov-jabar.id/verify/${certId}`;
-      
-      new QRCode(qrcodeDiv, {
-        text: qrData,
-        width: 90,
-        height: 90,
-        colorDark: "#0d47a1",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        wrapper.classList.add('visible');
+        wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-      
-      // Show certificate
-      document.getElementById("certificateWrapper").style.display = "block";
-      
-      // Scroll to certificate
-      setTimeout(() => {
-        document.getElementById("certificateWrapper").scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-      }, 100);
-      
-    } else {
-      alert("❌ Nama tidak ditemukan!\n\nPastikan nama sesuai dengan daftar atlet.\nKlik 'Lihat Daftar Atlet' untuk melihat nama yang terdaftar.");
-    }
-  }
+    });
+  }, 280);
+}
 
-  async function downloadCertificate() {
-    const button = document.getElementById('downloadBtn');
-    const originalText = button.innerHTML;
-    
-    // Disable button and show loading
-    button.disabled = true;
-    button.innerHTML = '⏳ Membuat PDF...';
-    
-    try {
-      const certificate = document.getElementById('certificateContent');
-      
-      // Wait a bit to ensure QR code is fully rendered
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Use html2canvas with optimized settings for QR code
-      const canvas = await html2canvas(certificate, {
-        scale: 2.5,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        imageTimeout: 0,
-        removeContainer: false
-      });
-      
-      // Get jsPDF from window
-      const { jsPDF } = window.jspdf;
-      
-      // Create PDF in A4 landscape
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: 'a4',
-        compress: true
-      });
-      
-      // A4 landscape dimensions: 297mm x 210mm
-      const pdfWidth = 297;
-      const pdfHeight = 210;
-      
-      // Calculate scaling to fit the page
-      const canvasAspect = canvas.width / canvas.height;
-      const pageAspect = pdfWidth / pdfHeight;
-      
-      let imgWidth, imgHeight, xOffset, yOffset;
-      
-      if (canvasAspect > pageAspect) {
-        // Canvas is wider - fit to width
-        imgWidth = pdfWidth;
-        imgHeight = pdfWidth / canvasAspect;
-        xOffset = 0;
-        yOffset = (pdfHeight - imgHeight) / 2;
-      } else {
-        // Canvas is taller - fit to height
-        imgHeight = pdfHeight;
-        imgWidth = pdfHeight * canvasAspect;
-        xOffset = (pdfWidth - imgWidth) / 2;
-        yOffset = 0;
-      }
-      
-      // Convert canvas to image with high quality
-      const imgData = canvas.toDataURL('image/png', 1.0);
-      
-      // Add image to PDF
-      pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight, '', 'FAST');
-      
-      // Get athlete name for filename
-      const athleteName = document.getElementById('athleteName').innerText;
-      const certId = document.getElementById('certId').innerText.replace('ID: ', '');
-      const filename = `Sertifikat_${athleteName.replace(/\s+/g, '_')}_${certId}.pdf`;
-      
-      // Download PDF
-      pdf.save(filename);
-      
-      // Show success message
-      button.innerHTML = '✅ Download Berhasil!';
-      setTimeout(() => {
-        button.innerHTML = originalText;
-        button.disabled = false;
-      }, 2000);
-      
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      alert('Terjadi kesalahan saat membuat PDF. Silakan coba lagi.');
-      button.innerHTML = originalText;
-      button.disabled = false;
-    }
-  }
+function setDlState(state) {
+  const btn   = document.getElementById('downloadBtn');
+  const icon  = document.getElementById('dlIcon');
+  const label = document.getElementById('dlLabel');
 
-  function backToSearch() {
-    document.getElementById("certificateWrapper").style.display = "none";
-    document.getElementById("searchName").value = "";
-    document.getElementById("suggestions").style.display = "none";
+  if (state === 'loading') {
+    btn.disabled = true;
+    label.textContent = 'Membuat PDF…';
+    icon.innerHTML = `<circle cx="12" cy="12" r="9"/>`;
+    icon.classList.add('spin-icon');
+    icon.removeAttribute('class');
+    icon.setAttribute('class', 'spin-icon');
+  } else if (state === 'success') {
+    icon.removeAttribute('class');
+    icon.setAttribute('class', 'check-icon');
+    icon.innerHTML = `<polyline points="20 6 9 17 4 12"/>`;
+    label.textContent = 'Berhasil!';
+    btn.style.background = '#2e7d5a';
+    btn.style.color = 'white';
+  } else {
+    btn.disabled = false;
+    icon.removeAttribute('class');
+    icon.innerHTML = `<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>`;
+    label.textContent = 'Unduh PDF';
+    btn.style.background = '';
+    btn.style.color = '';
+  }
+}
+
+async function downloadPDF() {
+  setDlState('loading');
+  try {
+    await new Promise(r => setTimeout(r, 500));
+    const card   = document.getElementById('certCard');
+    const canvas = await html2canvas(card, {
+      scale: 3, useCORS: true, allowTaint: true,
+      logging: false, backgroundColor: '#ffffff', imageTimeout: 0
+    });
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4', compress: true });
+
+    const pw = 297, ph = 210;
+    const ar = canvas.width / canvas.height, par = pw / ph;
+    let iw, ih, xo, yo;
+    if (ar > par) { iw = pw; ih = pw / ar; xo = 0; yo = (ph - ih) / 2; }
+    else          { ih = ph; iw = ph * ar; xo = (pw - iw) / 2; yo = 0; }
+
+    pdf.addImage(canvas.toDataURL('image/png', 1.0), 'PNG', xo, yo, iw, ih, '', 'FAST');
+
+    const name = document.getElementById('certName').textContent;
+    const cid  = document.getElementById('certId').textContent.replace('ID: ', '');
+    pdf.save(`Sertifikat_${name.replace(/\s+/g,'_')}_${cid}.pdf`);
+
+    setDlState('success');
+    setTimeout(() => setDlState('idle'), 2500);
+  } catch(e) {
+    console.error(e);
+    setDlState('idle');
+    alert('Gagal membuat PDF. Silakan coba lagi.');
+  }
+}
+
+function backToSearch() {
+  const wrapper = document.getElementById('certWrapper');
+  wrapper.classList.remove('visible');
+
+  setTimeout(() => {
+    wrapper.style.display = 'none';
+    const panel = document.getElementById('searchPanel');
+    panel.style.display = 'block';
+    panel.classList.add('panel-show');
+    setTimeout(() => panel.classList.remove('panel-show'), 400);
+    document.getElementById('searchName').value = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  }, 350);
+}
 
-  // Allow Enter key to search
-  document.getElementById("searchName").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      findCertificate();
-    }
-  });
+document.getElementById('searchName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') findCertificate();
+});
 </script>
-
 </body>
 </html>
