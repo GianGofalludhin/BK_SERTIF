@@ -13,20 +13,19 @@
 
 <style>
 :root {
-  --navy: #0a1f44;
-  --blue: #1a4480;
-  --blue-mid: #1d5fa6;
-  --gold: #c8972a;
+  --navy:       #0a1f44;
+  --blue:       #1a4480;
+  --blue-mid:   #1d5fa6;
+  --gold:       #c8972a;
   --gold-light: #e8b84b;
-  --gold-pale: #f5e9cc;
-  --white: #ffffff;
-  --text-dark: #0a1f44;
+  --white:      #ffffff;
+  --text-dark:  #0a1f44;
   --text-muted: #5a6a85;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io:    cubic-bezier(0.45, 0, 0.55, 1);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
   font-family: 'Lato', sans-serif;
@@ -36,765 +35,276 @@ body {
 }
 
 body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
+  content:'';
+  position:fixed; inset:0;
   background-image:
-    repeating-linear-gradient(45deg, rgba(200,151,42,0.04) 0, rgba(200,151,42,0.04) 1px, transparent 0, transparent 50%),
-    repeating-linear-gradient(-45deg, rgba(200,151,42,0.04) 0, rgba(200,151,42,0.04) 1px, transparent 0, transparent 50%);
-  background-size: 32px 32px;
-  pointer-events: none;
-  z-index: 0;
+    repeating-linear-gradient(45deg,  rgba(200,151,42,.04) 0, rgba(200,151,42,.04) 1px, transparent 0, transparent 50%),
+    repeating-linear-gradient(-45deg, rgba(200,151,42,.04) 0, rgba(200,151,42,.04) 1px, transparent 0, transparent 50%);
+  background-size:32px 32px;
+  pointer-events:none; z-index:0;
 }
 
-.app {
-  position: relative;
-  z-index: 1;
-  max-width: 480px;
-  margin: 0 auto;
-  min-height: 100vh;
-}
+/* ─── @keyframes ─── */
+@keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(12px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes scalePop { from{opacity:0;transform:scale(.72)}        to{opacity:1;transform:scale(1)} }
+@keyframes panelOut { from{opacity:1;transform:translateY(0) scale(1)} to{opacity:0;transform:translateY(-12px) scale(.97)} }
+@keyframes panelIn  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes spin     { to{transform:rotate(360deg)} }
+@keyframes checkDraw{ from{stroke-dashoffset:30;opacity:0} to{stroke-dashoffset:0;opacity:1} }
 
-/* ── HEADER ── */
+/* ─── APP ─── */
+.app { position:relative; z-index:1; max-width:480px; margin:0 auto; min-height:100vh; }
+
+/* ─── HEADER ─── */
 .site-header {
-  background: linear-gradient(180deg, #0d2550 0%, #112d5e 100%);
-  padding: 28px 20px 24px;
-  text-align: center;
-  border-bottom: 3px solid var(--gold);
-  position: relative;
-  animation: fadeDown 0.6s var(--ease-out) both;
+  background: linear-gradient(180deg,#0d2550 0%,#112d5e 100%);
+  padding:28px 20px 24px; text-align:center;
+  border-bottom:3px solid var(--gold); position:relative;
+  animation:fadeDown .6s var(--ease-out) both;
 }
-
 .site-header::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: var(--gold-light);
-}
-
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.header-logos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-
-.header-logo {
-  width: 52px; height: 52px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
-  animation: scalePop 0.5s var(--ease-out) 0.2s both;
-}
-
-.header-logo:nth-child(2) { animation-delay: 0.32s; }
-
-@keyframes scalePop {
-  from { opacity: 0; transform: scale(0.72); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-.site-header h1 {
-  font-family: 'Cinzel', serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--gold-light);
-  letter-spacing: 1px;
-  line-height: 1.4;
-  margin-bottom: 6px;
-  animation: fadeUp 0.5s var(--ease-out) 0.35s both;
-}
-
-.site-header .sub {
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  animation: fadeUp 0.5s var(--ease-out) 0.45s both;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── SEARCH PANEL ── */
-.search-panel {
-  background: var(--white);
-  margin: 20px 16px;
-  border-radius: 16px;
-  padding: 24px 20px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-  border: 1px solid rgba(200,151,42,0.2);
-  animation: fadeUp 0.55s var(--ease-out) 0.5s both;
-}
-
-.search-panel h2 {
-  font-family: 'Cinzel', serif;
-  font-size: 15px;
-  color: var(--navy);
-  text-align: center;
-  margin-bottom: 18px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.search-field {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.search-field input {
-  flex: 1;
-  height: 48px;
-  padding: 0 16px;
-  border: 2px solid #dde3ee;
-  border-radius: 10px;
-  font-size: 14px;
-  font-family: 'Lato', sans-serif;
-  color: var(--text-dark);
-  background: #f8faff;
-  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
-  outline: none;
-}
-
-.search-field input::placeholder { color: #9aa5be; }
-.search-field input:focus {
-  border-color: var(--blue-mid);
-  box-shadow: 0 0 0 3px rgba(29,95,166,0.12);
-  background: var(--white);
-}
-
-.btn-search {
-  height: 48px;
-  padding: 0 18px;
-  background: var(--navy);
-  color: var(--gold-light);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.25s, transform 0.15s;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-search svg { transition: transform 0.2s var(--ease-out); }
-.btn-search:hover { background: var(--blue); }
-.btn-search:hover svg { transform: scale(1.15); }
-.btn-search:active { transform: scale(0.94); }
-
-/* ── SUGGESTIONS ── */
-.suggestions {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  background: var(--white);
-  border: 1.5px solid transparent;
-  border-radius: 10px;
-  margin-bottom: 0;
-  box-shadow: 0 4px 16px rgba(10,31,68,0);
-  transition:
-    max-height 0.35s var(--ease-out),
-    opacity 0.25s ease,
-    margin-bottom 0.3s ease,
-    border-color 0.25s,
-    box-shadow 0.25s;
-}
-
-.suggestions.open {
-  max-height: 260px;
-  opacity: 1;
-  margin-bottom: 12px;
-  border-color: #dde3ee;
-  box-shadow: 0 4px 16px rgba(10,31,68,0.1);
-}
-
-.suggestion-item {
-  padding: 12px 16px;
-  font-size: 14px;
-  color: var(--text-dark);
-  cursor: pointer;
-  border-bottom: 1px solid #f0f3f9;
-  transition: background 0.18s, padding-left 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.suggestion-item::before {
-  content: '';
-  width: 5px; height: 5px;
-  border-right: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
-  transform: rotate(-45deg);
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.suggestion-item:last-child { border-bottom: none; }
-.suggestion-item:hover { background: #f0f6ff; padding-left: 20px; }
-
-/* ── ERROR MSG ── */
-.error-msg {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  background: #fff0f0;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 0 16px;
-  font-size: 13px;
-  color: #c0392b;
-  text-align: center;
-  transition: max-height 0.3s var(--ease-out), opacity 0.25s ease, padding 0.3s, border-color 0.25s, margin-top 0.25s;
-  margin-top: 0;
-}
-
-.error-msg.show {
-  max-height: 60px;
-  opacity: 1;
-  padding: 12px 16px;
-  border-color: #ffa5a5;
-  margin-top: 10px;
-}
-
-/* ── TOGGLE LIST BUTTON ── */
-.btn-toggle {
-  width: 100%;
-  height: 44px;
-  background: transparent;
-  border: 1.5px solid #dde3ee;
-  border-radius: 10px;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-family: 'Lato', sans-serif;
-  cursor: pointer;
-  transition: border-color 0.25s, color 0.25s, background 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.btn-toggle:hover { border-color: var(--blue-mid); color: var(--blue); background: #f0f6ff; }
-
-.btn-toggle svg {
-  transition: transform 0.3s var(--ease-out);
-}
-
-.btn-toggle.open svg { transform: rotate(180deg); }
-
-/* ── ATHLETE LIST ── */
-.athlete-list {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  border-top: 1px solid transparent;
-  padding-top: 0;
-  transition:
-    max-height 0.45s var(--ease-out),
-    opacity 0.3s ease,
-    padding-top 0.35s ease,
-    border-color 0.3s,
-    margin-top 0.3s;
-  margin-top: 0;
-}
-
-.athlete-list.open {
-  max-height: 600px;
-  opacity: 1;
-  padding-top: 12px;
-  border-top-color: #eef0f5;
-  margin-top: 12px;
-}
-
-.athlete-list-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.athlete-item {
-  padding: 11px 14px;
-  background: #f8faff;
-  border-radius: 8px;
-  font-size: 13.5px;
-  color: var(--text-dark);
-  cursor: pointer;
-  margin-bottom: 6px;
-  border: 1px solid transparent;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.athlete-item::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.athlete-item:hover {
-  background: #e8f0ff;
-  border-color: #c0d3f0;
-  color: var(--navy);
-  transform: translateX(4px);
-}
-
-.athlete-item:hover::before { transform: scale(1.4); }
-
-/* ── CERTIFICATE WRAPPER ── */
-.cert-wrapper {
-  display: none;
-  margin: 0 0 24px;
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
-}
-
-.cert-wrapper.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.cert-preview-card {
-  background: var(--white);
-  margin: 0 16px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 12px 50px rgba(0,0,0,0.35);
-  border: 1px solid rgba(200,151,42,0.25);
-}
-
-.cert-preview-card .strip-top {
-  height: 8px;
-  background: repeating-linear-gradient(90deg, var(--navy) 0px, var(--navy) 20px, var(--gold) 20px, var(--gold) 22px);
-}
-
-.cert-preview-body {
-  padding: 22px 20px 20px;
-}
-
-/* ── Staggered cert reveal ── */
-.cert-preview-card .cert-logos-row  { animation: none; }
-.cert-preview-card .cert-title-block{ animation: none; }
-
-.cert-row-anim {
-  opacity: 0;
-  transform: translateY(14px);
-  animation: fadeUp 0.45s var(--ease-out) forwards;
-}
-
-.cert-logos-row   { animation-delay: 0.05s; }
-.cert-title-block { animation-delay: 0.12s; }
-.cert-divider     { animation-delay: 0.18s; }
-.cert-given-to    { animation-delay: 0.22s; }
-.cert-name-block  { animation-delay: 0.28s; }
-.cert-participation{ animation-delay: 0.33s; }
-.cert-event-box   { animation-delay: 0.38s; }
-.cert-motto       { animation-delay: 0.44s; }
-.cert-bottom      { animation-delay: 0.5s; }
-
-.cert-logos-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.cert-logo { width: 48px; height: 48px; object-fit: contain; }
-
-.cert-title-block { text-align: center; margin-bottom: 14px; }
-
-.cert-kw {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.cert-headline {
-  font-family: 'Cinzel', serif;
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--navy);
-  letter-spacing: 2px;
-}
-
-.cert-sub {
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  font-style: italic;
-}
-
-.cert-divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 12px 0;
-}
-
-.cert-divider::before,
-.cert-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.cert-divider span { color: var(--gold); font-size: 14px; }
-
-.cert-given-to {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-}
-
-.cert-name-block {
-  background: linear-gradient(135deg, #f0f6ff 0%, #fffcf0 100%);
-  border: 1.5px solid var(--gold-light);
-  border-radius: 10px;
-  padding: 14px 16px;
-  text-align: center;
-  margin-bottom: 14px;
-  position: relative;
-}
-
-.cert-name-block::before,
-.cert-name-block::after {
-  content: '◆';
-  position: absolute;
-  color: var(--gold);
-  font-size: 8px;
-  top: 8px;
-}
-.cert-name-block::before { left: 10px; }
-.cert-name-block::after  { right: 10px; }
-
-.cert-name {
-  font-family: 'Cinzel', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-  word-break: break-word;
-}
-
-.cert-id {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.5px;
-}
-
-.cert-participation {
-  text-align: center;
-  font-size: 11.5px;
-  color: #444;
-  line-height: 1.7;
-  margin-bottom: 12px;
-}
-
-.cert-participation strong { color: var(--navy); font-weight: 700; }
-
-.cert-event-box {
-  background: var(--navy);
-  border-radius: 10px;
-  padding: 14px 16px;
-  text-align: center;
-  margin-bottom: 14px;
-  position: relative;
-  overflow: hidden;
-}
-
-.cert-event-box::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
-}
-
-.cert-event-box::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
-}
-
-.cert-event-title {
-  font-family: 'Cinzel', serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gold-light);
-  letter-spacing: 1px;
-  line-height: 1.5;
-  margin-bottom: 4px;
-}
-
-.cert-event-sub {
-  font-size: 10px;
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 0.3px;
-}
-
-.cert-motto {
-  text-align: center;
-  font-style: italic;
-  font-size: 11px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-
-.cert-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 12px;
-}
-
-.cert-sig { flex: 1; }
-
-.cert-sig-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  text-align: center;
-  margin-bottom: 4px;
-}
-
-.cert-sig-img {
-  width: 110px; height: 55px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 4px;
-}
-
-.cert-sig-name {
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--navy);
-  text-align: center;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--gold);
-}
-
-.cert-qr { text-align: center; flex-shrink: 0; }
-
-.cert-qr-box {
-  display: inline-block;
-  padding: 6px;
-  border: 2px solid var(--navy);
-  border-radius: 8px;
-  background: white;
-}
-
-.cert-qr-label {
-  font-size: 9px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  text-align: center;
-}
-
-.cert-preview-card .strip-bottom {
-  height: 8px;
-  background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 20px, var(--navy) 20px, var(--navy) 22px);
-}
-
-/* ── ACTION BUTTONS ── */
-.action-row {
-  display: flex;
-  gap: 10px;
-  padding: 16px 16px 0;
-  opacity: 0;
-  transform: translateY(12px);
-  animation: fadeUp 0.4s var(--ease-out) 0.6s forwards;
-}
-
-.btn-download {
-  flex: 1;
-  height: 50px;
-  background: var(--gold);
-  color: var(--navy);
-  border: none;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  font-family: 'Lato', sans-serif;
-  cursor: pointer;
-  transition: background 0.25s, transform 0.2s var(--ease-out), box-shadow 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 12px rgba(200,151,42,0.3);
-}
-
-.btn-download:hover {
-  background: var(--gold-light);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(200,151,42,0.4);
-}
-
-.btn-download:active { transform: scale(0.97); box-shadow: none; }
-.btn-download:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-
-/* spinning loader for dl button */
-@keyframes spin { to { transform: rotate(360deg); } }
-.spin-icon { animation: spin 0.8s linear infinite; }
-
-/* success checkmark draw */
-@keyframes checkDraw {
-  from { stroke-dashoffset: 30; opacity: 0; }
-  to   { stroke-dashoffset: 0;  opacity: 1; }
-}
-.check-icon polyline {
-  stroke-dasharray: 30;
-  stroke-dashoffset: 30;
-  animation: checkDraw 0.4s var(--ease-out) forwards;
-}
-
-.btn-back {
-  height: 50px;
-  padding: 0 20px;
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.7);
-  border: 1.5px solid rgba(255,255,255,0.15);
-  border-radius: 12px;
-  font-size: 14px;
-  font-family: 'Lato', sans-serif;
-  cursor: pointer;
-  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s var(--ease-out);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.btn-back svg { transition: transform 0.25s var(--ease-out); }
-.btn-back:hover { background: rgba(255,255,255,0.14); color: white; border-color: rgba(255,255,255,0.3); }
-.btn-back:hover svg { transform: translateX(-3px); }
-.btn-back:active { transform: scale(0.97); }
-
-/* ── PANEL TRANSITIONS ── */
-.panel-hide {
-  animation: panelOut 0.3s var(--ease-in-out) forwards;
-}
-
-.panel-show {
-  animation: panelIn 0.4s var(--ease-out) forwards;
-}
-
-@keyframes panelOut {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to   { opacity: 0; transform: translateY(-12px) scale(0.97); }
-}
-
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── FOOTER ── */
-.site-footer {
-  text-align: center;
-  padding: 20px 16px 32px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 1px;
-}
-
-/* ══ PRINT — A4 Landscape ══ */
+  content:''; position:absolute; bottom:-6px; left:50%; transform:translateX(-50%);
+  width:60px; height:3px; background:var(--gold-light);
+}
+.header-logos { display:flex; justify-content:center; align-items:center; gap:16px; margin-bottom:14px; }
+.header-logo  { width:52px; height:52px; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(0,0,0,.4)); animation:scalePop .5s var(--ease-out) .2s both; }
+.header-logo:nth-child(2) { animation-delay:.32s; }
+.site-header h1 { font-family:'Cinzel',serif; font-size:16px; font-weight:700; color:var(--gold-light); letter-spacing:1px; line-height:1.4; margin-bottom:6px; animation:fadeUp .5s var(--ease-out) .35s both; }
+.site-header .sub { font-size:11px; color:rgba(255,255,255,.6); letter-spacing:.5px; text-transform:uppercase; animation:fadeUp .5s var(--ease-out) .45s both; }
+
+/* ─── SEARCH PANEL ─── */
+.search-panel { background:var(--white); margin:20px 16px; border-radius:16px; padding:24px 20px; box-shadow:0 8px 40px rgba(0,0,0,.3); border:1px solid rgba(200,151,42,.2); animation:fadeUp .55s var(--ease-out) .5s both; }
+.search-panel h2 { font-family:'Cinzel',serif; font-size:15px; color:var(--navy); text-align:center; margin-bottom:18px; font-weight:600; letter-spacing:.5px; }
+.search-field { display:flex; gap:8px; margin-bottom:12px; }
+.search-field input { flex:1; height:48px; padding:0 16px; border:2px solid #dde3ee; border-radius:10px; font-size:14px; font-family:'Lato',sans-serif; color:var(--text-dark); background:#f8faff; transition:border-color .25s,box-shadow .25s,background .25s; outline:none; }
+.search-field input::placeholder { color:#9aa5be; }
+.search-field input:focus { border-color:var(--blue-mid); box-shadow:0 0 0 3px rgba(29,95,166,.12); background:var(--white); }
+
+.btn-search { height:48px; padding:0 18px; background:var(--navy); color:var(--gold-light); border:none; border-radius:10px; cursor:pointer; transition:background .25s,transform .15s; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.btn-search svg { transition:transform .2s var(--ease-out); }
+.btn-search:hover { background:var(--blue); }
+.btn-search:hover svg { transform:scale(1.15); }
+.btn-search:active { transform:scale(.94); }
+
+/* ─── SUGGESTIONS ─── */
+.suggestions { overflow:hidden; max-height:0; opacity:0; background:var(--white); border:1.5px solid transparent; border-radius:10px; margin-bottom:0; box-shadow:0 4px 16px rgba(10,31,68,0); transition:max-height .35s var(--ease-out),opacity .25s,margin-bottom .3s,border-color .25s,box-shadow .25s; }
+.suggestions.open { max-height:260px; opacity:1; margin-bottom:12px; border-color:#dde3ee; box-shadow:0 4px 16px rgba(10,31,68,.1); }
+.suggestion-item { padding:12px 16px; font-size:14px; color:var(--text-dark); cursor:pointer; border-bottom:1px solid #f0f3f9; transition:background .18s,padding-left .2s; display:flex; align-items:center; gap:10px; }
+.suggestion-item::before { content:''; width:5px; height:5px; border-right:2px solid var(--gold); border-bottom:2px solid var(--gold); transform:rotate(-45deg); flex-shrink:0; }
+.suggestion-item:last-child { border-bottom:none; }
+.suggestion-item:hover { background:#f0f6ff; padding-left:20px; }
+
+/* ─── ERROR ─── */
+.error-msg { overflow:hidden; max-height:0; opacity:0; background:#fff0f0; border:1px solid transparent; border-radius:8px; padding:0 16px; font-size:13px; color:#c0392b; text-align:center; transition:max-height .3s var(--ease-out),opacity .25s,padding .3s,border-color .25s,margin-top .25s; margin-top:0; }
+.error-msg.show { max-height:60px; opacity:1; padding:12px 16px; border-color:#ffa5a5; margin-top:10px; }
+
+/* ─── TOGGLE BTN ─── */
+.btn-toggle { width:100%; height:44px; background:transparent; border:1.5px solid #dde3ee; border-radius:10px; color:var(--text-muted); font-size:13px; font-family:'Lato',sans-serif; cursor:pointer; transition:border-color .25s,color .25s,background .25s; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:4px; }
+.btn-toggle:hover { border-color:var(--blue-mid); color:var(--blue); background:#f0f6ff; }
+.btn-toggle svg { transition:transform .3s var(--ease-out); }
+.btn-toggle.open svg { transform:rotate(180deg); }
+
+/* ─── ATHLETE LIST ─── */
+.athlete-list { overflow:hidden; max-height:0; opacity:0; border-top:1px solid transparent; padding-top:0; transition:max-height .45s var(--ease-out),opacity .3s,padding-top .35s,border-color .3s,margin-top .3s; margin-top:0; }
+.athlete-list.open { max-height:600px; opacity:1; padding-top:12px; border-top-color:#eef0f5; margin-top:12px; }
+.athlete-list-label { font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.athlete-item { padding:11px 14px; background:#f8faff; border-radius:8px; font-size:13.5px; color:var(--text-dark); cursor:pointer; margin-bottom:6px; border:1px solid transparent; transition:background .2s,border-color .2s,color .2s,transform .2s var(--ease-out); display:flex; align-items:center; gap:10px; }
+.athlete-item::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; transition:transform .2s; }
+.athlete-item:hover { background:#e8f0ff; border-color:#c0d3f0; color:var(--navy); transform:translateX(4px); }
+.athlete-item:hover::before { transform:scale(1.4); }
+
+/* ─── CERT WRAPPER (mobile view) ─── */
+.cert-wrapper { display:none; margin:0 0 24px; opacity:0; transform:translateY(24px); transition:opacity .5s var(--ease-out),transform .5s var(--ease-out); }
+.cert-wrapper.visible { opacity:1; transform:translateY(0); }
+.cert-preview-card { background:var(--white); margin:0 16px; border-radius:16px; overflow:hidden; box-shadow:0 12px 50px rgba(0,0,0,.35); border:1px solid rgba(200,151,42,.25); }
+.cert-strip-top    { height:8px; background:repeating-linear-gradient(90deg,var(--navy) 0,var(--navy) 20px,var(--gold) 20px,var(--gold) 22px); }
+.cert-strip-bottom { height:8px; background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 20px,var(--navy) 20px,var(--navy) 22px); }
+.cert-preview-body { padding:20px 18px 18px; }
+
+/* stagger */
+.cert-row-anim { opacity:0; transform:translateY(14px); animation:fadeUp .45s var(--ease-out) forwards; }
+.cr1{animation-delay:.05s} .cr2{animation-delay:.12s} .cr3{animation-delay:.18s}
+.cr4{animation-delay:.22s} .cr5{animation-delay:.28s} .cr6{animation-delay:.33s}
+.cr7{animation-delay:.38s} .cr8{animation-delay:.44s} .cr9{animation-delay:.5s}
+
+.cert-logos-row { display:flex; justify-content:center; align-items:center; gap:14px; margin-bottom:14px; }
+.cert-logo      { width:44px; height:44px; object-fit:contain; }
+.cert-title-block { text-align:center; margin-bottom:12px; }
+.cert-kw { font-size:8px; font-weight:700; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:3px; }
+.cert-headline { font-family:'Cinzel',serif; font-size:20px; font-weight:900; color:var(--navy); letter-spacing:2px; }
+.cert-sub { font-size:9.5px; color:var(--text-muted); letter-spacing:1px; font-style:italic; }
+.cert-divider { display:flex; align-items:center; gap:10px; margin:10px 0; }
+.cert-divider::before,.cert-divider::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.cert-divider span { color:var(--gold); font-size:13px; }
+.cert-given-to { text-align:center; font-size:10.5px; color:var(--text-muted); letter-spacing:.5px; margin-bottom:6px; }
+.cert-name-block { background:linear-gradient(135deg,#f0f6ff 0%,#fffcf0 100%); border:1.5px solid var(--gold-light); border-radius:10px; padding:12px 16px; text-align:center; margin-bottom:12px; position:relative; }
+.cert-name-block::before,.cert-name-block::after { content:'◆'; position:absolute; color:var(--gold); font-size:7px; top:7px; }
+.cert-name-block::before { left:9px; } .cert-name-block::after { right:9px; }
+.cert-name { font-family:'Cinzel',serif; font-size:17px; font-weight:700; color:var(--navy); letter-spacing:.5px; margin-bottom:3px; word-break:break-word; }
+.cert-id { font-size:9.5px; color:var(--text-muted); font-family:'Courier New',monospace; }
+.cert-participation { text-align:center; font-size:11px; color:#444; line-height:1.7; margin-bottom:10px; }
+.cert-participation strong { color:var(--navy); font-weight:700; }
+.cert-event-box { background:var(--navy); border-radius:9px; padding:12px 14px; text-align:center; margin-bottom:12px; position:relative; overflow:hidden; }
+.cert-event-box::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold-light),transparent); }
+.cert-event-box::after  { content:''; position:absolute; bottom:0;left:0;right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold-light),transparent); }
+.cert-event-title { font-family:'Cinzel',serif; font-size:12px; font-weight:700; color:var(--gold-light); letter-spacing:1px; line-height:1.5; margin-bottom:3px; }
+.cert-event-sub { font-size:9.5px; color:rgba(255,255,255,.55); }
+.cert-motto { text-align:center; font-style:italic; font-size:10.5px; color:var(--text-muted); line-height:1.6; margin-bottom:14px; }
+.cert-bottom { display:flex; justify-content:space-between; align-items:flex-end; gap:10px; }
+.cert-sig { flex:1; }
+.cert-sig-label { font-size:9.5px; color:var(--text-muted); line-height:1.6; text-align:center; margin-bottom:3px; }
+.cert-sig-img { width:100px; height:50px; object-fit:contain; display:block; margin:0 auto 3px; }
+.cert-sig-name { font-family:'Cinzel',serif; font-size:9.5px; font-weight:700; color:var(--navy); text-align:center; text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--gold); }
+.cert-qr { text-align:center; flex-shrink:0; }
+.cert-qr-box { display:inline-block; padding:5px; border:2px solid var(--navy); border-radius:6px; background:white; }
+.cert-qr-label { font-size:8.5px; color:var(--text-muted); margin-top:3px; text-align:center; }
+
+/* ─── ACTION BUTTONS ─── */
+.action-row { display:flex; gap:10px; padding:16px 16px 0; opacity:0; transform:translateY(12px); animation:fadeUp .4s var(--ease-out) .6s forwards; }
+.btn-download { flex:1; height:50px; background:var(--gold); color:var(--navy); border:none; border-radius:12px; font-size:14px; font-weight:700; font-family:'Lato',sans-serif; cursor:pointer; transition:background .25s,transform .2s var(--ease-out),box-shadow .25s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:.3px; box-shadow:0 2px 12px rgba(200,151,42,.3); }
+.btn-download:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 6px 20px rgba(200,151,42,.4); }
+.btn-download:active { transform:scale(.97); box-shadow:none; }
+.btn-download:disabled { opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
+.spin-icon { animation:spin .8s linear infinite; }
+.check-icon polyline { stroke-dasharray:30; stroke-dashoffset:30; animation:checkDraw .4s var(--ease-out) forwards; }
+.btn-back { height:50px; padding:0 20px; background:rgba(255,255,255,.08); color:rgba(255,255,255,.7); border:1.5px solid rgba(255,255,255,.15); border-radius:12px; font-size:14px; font-family:'Lato',sans-serif; cursor:pointer; transition:background .25s,color .25s,border-color .25s,transform .2s var(--ease-out); white-space:nowrap; display:flex; align-items:center; gap:6px; }
+.btn-back svg { transition:transform .25s var(--ease-out); }
+.btn-back:hover { background:rgba(255,255,255,.14); color:white; border-color:rgba(255,255,255,.3); }
+.btn-back:hover svg { transform:translateX(-3px); }
+.btn-back:active { transform:scale(.97); }
+
+.site-footer { text-align:center; padding:20px 16px 32px; font-size:11px; color:rgba(255,255,255,.25); letter-spacing:1px; }
+
+/* ─── CERT PRINT TEMPLATE (off-screen, used only for PDF render) ─── */
+#certPrintTemplate {
+  position:fixed;
+  left:-9999px; top:0;
+  width:1122px; /* 297mm @ 96dpi */
+  height:794px; /* 210mm @ 96dpi */
+  background:white;
+  font-family:'Lato',sans-serif;
+  overflow:hidden;
+  z-index:-1;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:rgba(255,255,255,.05); }
+::-webkit-scrollbar-thumb { background:rgba(200,151,42,.4); border-radius:3px; }
+
+/* ─── PRINT CSS (only for browser print, not PDF button) ─── */
 @media print {
-  @page { size: A4 landscape; margin: 0; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-
-  body { background: white !important; }
-  body::before { display: none; }
-  .app { max-width: none; }
-
-  .site-header, .search-panel, .action-row, .site-footer, #printableArea { display: none !important; }
-
-  .cert-wrapper {
-    display: block !important;
-    opacity: 1 !important;
-    transform: none !important;
-    margin: 0 !important;
-  }
-
-  .cert-row-anim { opacity: 1 !important; transform: none !important; animation: none !important; }
-
-  .cert-preview-card {
-    margin: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-    width: 297mm !important;
-    height: 210mm !important;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .strip-top, .strip-bottom { height: 12px !important; }
-
-  .cert-preview-body {
-    flex: 1;
-    padding: 16mm 22mm !important;
-    display: grid;
-    grid-template-rows: auto auto auto auto 1fr auto auto auto auto;
-    gap: 3mm;
-  }
-
-  .cert-logos-row { margin-bottom: 0 !important; }
-  .cert-logo { width: 60px !important; height: 60px !important; }
-  .cert-headline { font-size: 36px !important; }
-  .cert-name { font-size: 28px !important; }
-  .cert-event-title { font-size: 17px !important; }
+  @page { size:A4 landscape; margin:0; }
+  * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  body { background:white !important; }
+  body::before { display:none; }
+  .app,.site-header,.search-panel,.action-row,.site-footer,#printableArea { display:none !important; }
+  #certPrintTemplate { position:static !important; left:0 !important; width:297mm !important; height:210mm !important; z-index:1 !important; display:block !important; }
 }
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-::-webkit-scrollbar-thumb { background: rgba(200,151,42,0.4); border-radius: 3px; }
 </style>
 </head>
 <body>
 
-<div id="printableArea" style="display:none;"></div>
+<!-- ══════════════════════════════════════════
+     OFF-SCREEN PRINT TEMPLATE — used by PDF
+     Size: 1122×794px ≈ A4 landscape at 96dpi
+     This is ALWAYS in DOM, always rendered,
+     so html2canvas captures it correctly.
+     ══════════════════════════════════════════ -->
+<div id="certPrintTemplate">
 
+  <!-- TOP BORDER STRIP -->
+  <div style="height:14px;background:repeating-linear-gradient(90deg,#0a1f44 0,#0a1f44 40px,#c8972a 40px,#c8972a 44px);"></div>
+
+  <!-- MAIN BODY -->
+  <div style="padding:28px 52px 24px;height:calc(794px - 28px);display:flex;flex-direction:column;border-left:6px solid #0a1f44;border-right:6px solid #0a1f44;">
+
+    <!-- CORNER ORNAMENTS via outline box -->
+    <div style="position:absolute;top:14px;left:0;right:0;bottom:14px;pointer-events:none;">
+      <!-- outer gold frame inset -->
+      <div style="position:absolute;top:18px;left:18px;right:18px;bottom:18px;border:2px solid #e8b84b;pointer-events:none;"></div>
+    </div>
+
+    <!-- LOGOS ROW -->
+    <div style="display:flex;justify-content:center;align-items:center;gap:32px;margin-bottom:16px;">
+      <img id="ptLogo1" src="image/perbasi.png" width="72" height="72" style="object-fit:contain;">
+      <img id="ptLogo2" src="image/porprov.png"  width="72" height="72" style="object-fit:contain;">
+      <img id="ptLogo3" src="image/pemkab.png"   width="72" height="72" style="object-fit:contain;">
+    </div>
+
+    <!-- TITLE -->
+    <div style="text-align:center;margin-bottom:8px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:4px;color:#c8972a;text-transform:uppercase;margin-bottom:4px;font-family:'Lato',sans-serif;">Certificate of Participation</div>
+      <div style="font-family:'Cinzel',serif;font-size:38px;font-weight:900;color:#0a1f44;letter-spacing:5px;">SERTIFIKAT</div>
+      <div style="font-size:11px;color:#5a6a85;letter-spacing:1.5px;font-style:italic;font-family:'Lato',sans-serif;">Keikutsertaan Atlet Resmi</div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div style="display:flex;align-items:center;gap:12px;margin:8px 60px;">
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#c8972a,transparent);"></div>
+      <span style="color:#c8972a;font-size:16px;">✦</span>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#c8972a,transparent);"></div>
+    </div>
+
+    <!-- GIVEN TO -->
+    <div style="text-align:center;font-size:12px;color:#5a6a85;letter-spacing:.5px;margin-bottom:8px;font-family:'Lato',sans-serif;">Diberikan kepada:</div>
+
+    <!-- NAME BLOCK -->
+    <div style="background:linear-gradient(135deg,#f0f6ff 0%,#fffcf0 100%);border:2px solid #e8b84b;border-radius:10px;padding:14px 40px;text-align:center;margin:0 60px 12px;position:relative;">
+      <span style="position:absolute;top:8px;left:14px;color:#c8972a;font-size:9px;">◆</span>
+      <span style="position:absolute;top:8px;right:14px;color:#c8972a;font-size:9px;">◆</span>
+      <div id="ptName" style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:#0a1f44;letter-spacing:1px;">NAMA ATLET</div>
+      <div id="ptId"   style="font-size:10px;color:#5a6a85;font-family:'Courier New',monospace;margin-top:3px;">ID: CERT-2025-XXXX</div>
+    </div>
+
+    <!-- PARTICIPATION TEXT -->
+    <div style="text-align:center;font-size:12px;color:#333;line-height:1.7;margin-bottom:10px;font-family:'Lato',sans-serif;">
+      Yang telah berpartisipasi dengan penuh dedikasi sebagai<br>
+      <strong style="color:#0a1f44;">Atlet Cabang Olahraga Bola Basket</strong> dalam ajang:
+    </div>
+
+    <!-- EVENT BOX -->
+    <div style="background:#0a1f44;border-radius:10px;padding:13px 40px;text-align:center;margin:0 40px 10px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#e8b84b,transparent);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#e8b84b,transparent);"></div>
+      <div style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#e8b84b;letter-spacing:1.5px;line-height:1.6;">BABAK KUALIFIKASI (BK)<br>PEKAN OLAHRAGA PROVINSI (PORPROV) JAWA BARAT 2025</div>
+      <div style="font-size:10.5px;color:rgba(255,255,255,.6);margin-top:3px;font-family:'Lato',sans-serif;">Diselenggarakan oleh Komite Olahraga Nasional Indonesia (KONI) Jawa Barat</div>
+    </div>
+
+    <!-- MOTTO -->
+    <div style="text-align:center;font-style:italic;font-size:11px;color:#5a6a85;line-height:1.7;font-family:'Lato',sans-serif;margin-bottom:auto;padding-top:6px;">
+      Semoga prestasi ini menjadi motivasi untuk terus berprestasi dan mengharumkan nama daerah Kabupaten Subang
+    </div>
+
+    <!-- BOTTOM: SIGNATURE + QR -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:12px;padding:0 20px;">
+
+      <!-- Signature -->
+      <div style="text-align:center;min-width:200px;">
+        <div style="font-size:11px;color:#5a6a85;line-height:1.8;font-family:'Lato',sans-serif;">Subang, Februari 2026<br>Ketua PERBASI Kabupaten Subang</div>
+        <img src="image/ttd.png" width="140" height="70" style="object-fit:contain;display:block;margin:6px auto;">
+        <div style="width:160px;height:1px;background:#0a1f44;margin:0 auto 5px;"></div>
+        <div style="font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:#0a1f44;">AGUS HERMAWAN</div>
+        <div style="font-size:9px;color:#5a6a85;font-family:'Lato',sans-serif;">Ketua Umum</div>
+      </div>
+
+      <!-- QR -->
+      <div style="text-align:center;">
+        <div id="ptQr" style="display:inline-block;padding:6px;border:2px solid #0a1f44;border-radius:8px;background:white;"></div>
+        <div style="font-size:9px;color:#5a6a85;margin-top:4px;font-family:'Lato',sans-serif;">Scan untuk verifikasi</div>
+      </div>
+
+    </div>
+  </div><!-- /main body -->
+
+  <!-- BOTTOM BORDER STRIP -->
+  <div style="height:14px;background:repeating-linear-gradient(90deg,#c8972a 0,#c8972a 40px,#0a1f44 40px,#0a1f44 44px);"></div>
+
+</div><!-- /#certPrintTemplate -->
+
+
+<!-- ══════════════════════════════ APP UI ══════════════════════════════ -->
 <div class="app">
 
   <header class="site-header">
@@ -808,7 +318,6 @@ body::before {
 
   <div class="search-panel" id="searchPanel">
     <h2>Cari Sertifikat Anda</h2>
-
     <div class="search-field">
       <input type="text" id="searchName" placeholder="Ketik nama lengkap atlet…" autocomplete="off" oninput="showSuggestions()">
       <button class="btn-search" onclick="findCertificate()" title="Cari" aria-label="Cari">
@@ -817,10 +326,8 @@ body::before {
         </svg>
       </button>
     </div>
-
     <div class="suggestions" id="suggestions"></div>
-    <div class="error-msg" id="errorMsg"></div>
-
+    <div class="error-msg"   id="errorMsg"></div>
     <button class="btn-toggle" id="toggleBtn" onclick="toggleList()">
       <svg id="toggleIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
@@ -828,57 +335,54 @@ body::before {
       </svg>
       <span id="toggleLabel">Lihat Daftar Atlet</span>
     </button>
-
     <div class="athlete-list" id="athleteList">
       <p class="athlete-list-label">Atlet Terdaftar</p>
       <div id="athleteListItems"></div>
     </div>
   </div>
 
+  <!-- Mobile cert preview -->
   <div class="cert-wrapper" id="certWrapper">
-
     <div class="cert-preview-card" id="certCard">
-      <div class="strip-top"></div>
-
+      <div class="cert-strip-top"></div>
       <div class="cert-preview-body">
 
-        <div class="cert-logos-row cert-row-anim">
+        <div class="cert-logos-row cert-row-anim cr1">
           <img src="image/perbasi.png" alt="PERBASI" class="cert-logo">
           <img src="image/porprov.png" alt="PORPROV" class="cert-logo">
-          <img src="image/pemkab.png" alt="Pemkab Subang" class="cert-logo">
+          <img src="image/pemkab.png"  alt="Pemkab"  class="cert-logo">
         </div>
 
-        <div class="cert-title-block cert-row-anim">
+        <div class="cert-title-block cert-row-anim cr2">
           <p class="cert-kw">Certificate of Participation</p>
           <h2 class="cert-headline">SERTIFIKAT</h2>
           <p class="cert-sub">Keikutsertaan Atlet Resmi</p>
         </div>
 
-        <div class="cert-divider cert-row-anim"><span>✦</span></div>
+        <div class="cert-divider cert-row-anim cr3"><span>✦</span></div>
+        <p class="cert-given-to cert-row-anim cr4">Diberikan kepada:</p>
 
-        <p class="cert-given-to cert-row-anim">Diberikan kepada:</p>
-
-        <div class="cert-name-block cert-row-anim">
+        <div class="cert-name-block cert-row-anim cr5">
           <div class="cert-name" id="certName">NAMA ATLET</div>
-          <div class="cert-id" id="certId">ID: CERT-2025-XXXX</div>
+          <div class="cert-id"   id="certId">ID: CERT-2025-XXXX</div>
         </div>
 
-        <p class="cert-participation cert-row-anim">
+        <p class="cert-participation cert-row-anim cr6">
           Yang telah berpartisipasi dengan penuh dedikasi sebagai<br>
           <strong>Atlet Cabang Olahraga Bola Basket</strong> dalam ajang:
         </p>
 
-        <div class="cert-event-box cert-row-anim">
+        <div class="cert-event-box cert-row-anim cr7">
           <div class="cert-event-title">BABAK KUALIFIKASI (BK)<br>PEKAN OLAHRAGA PROVINSI (PORPROV) JAWA BARAT 2025</div>
           <div class="cert-event-sub">Diselenggarakan oleh KONI Jawa Barat</div>
         </div>
 
-        <p class="cert-motto cert-row-anim">
+        <p class="cert-motto cert-row-anim cr8">
           Semoga prestasi ini menjadi motivasi untuk terus berprestasi<br>
           dan mengharumkan nama daerah Kabupaten Subang
         </p>
 
-        <div class="cert-bottom cert-row-anim">
+        <div class="cert-bottom cert-row-anim cr9">
           <div class="cert-sig">
             <p class="cert-sig-label">Subang, Februari 2026<br>Ketua PERBASI Kabupaten Subang</p>
             <img src="image/ttd.png" alt="Tanda Tangan" class="cert-sig-img">
@@ -891,15 +395,14 @@ body::before {
         </div>
 
       </div>
-      <div class="strip-bottom"></div>
+      <div class="cert-strip-bottom"></div>
     </div>
 
     <div class="action-row">
       <button class="btn-download" id="downloadBtn" onclick="downloadPDF()">
         <svg id="dlIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
+          <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
         <span id="dlLabel">Unduh PDF</span>
       </button>
@@ -910,32 +413,21 @@ body::before {
         Kembali
       </button>
     </div>
-
   </div>
 
   <div class="site-footer">PERBASI KAB. SUBANG · 2025</div>
-
 </div>
 
 <script>
 const athletes = [
-  "Arya Putra Aditya",
-  "Muhammad Farid Hakim",
-  "Aldo Romulus Partahi Batubara",
-  "Haikal Priyatna Ramadan",
-  "Muhammad Syauqy Ibnu Rifqi",
-  "Mulky Ahmad Zamzami",
-  "Prabu Daniyal Rayyan Pratama",
-  "Reyza Yoga Prayitno",
-  "Reza Yudistisa",
-  "Rocky Patiar Sihombing",
-  "Tardas Cristopher Hutapea",
-  "Yazid Rizky Ramadhan",
-  "Mochmad Reska Sandia",
-  "Muhammad Dzaky Ahnaf",
-  "Dylan Irji Ghifari"
+  "Arya Putra Aditya","Muhammad Farid Hakim","Aldo Romulus Partahi Batubara",
+  "Haikal Priyatna Ramadan","Muhammad Syauqy Ibnu Rifqi","Mulky Ahmad Zamzami",
+  "Prabu Daniyal Rayyan Pratama","Reyza Yoga Prayitno","Reza Yudistisa",
+  "Rocky Patiar Sihombing","Tardas Cristopher Hutapea","Yazid Rizky Ramadhan",
+  "Mochmad Reska Sandia","Muhammad Dzaky Ahnaf","Dylan Irji Ghifari"
 ];
 
+// Populate list
 const listEl = document.getElementById('athleteListItems');
 athletes.forEach(name => {
   const d = document.createElement('div');
@@ -948,9 +440,9 @@ athletes.forEach(name => {
 function toggleList() {
   const list = document.getElementById('athleteList');
   const btn  = document.getElementById('toggleBtn');
-  const isOpen = list.classList.toggle('open');
-  btn.classList.toggle('open', isOpen);
-  document.getElementById('toggleLabel').textContent = isOpen ? 'Tutup Daftar' : 'Lihat Daftar Atlet';
+  const open = list.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  document.getElementById('toggleLabel').textContent = open ? 'Tutup Daftar' : 'Lihat Daftar Atlet';
 }
 
 function showSuggestions() {
@@ -960,9 +452,7 @@ function showSuggestions() {
   if (val.length < 2) { box.classList.remove('open'); return; }
   const hits = athletes.filter(n => n.toLowerCase().includes(val));
   if (!hits.length) { box.classList.remove('open'); return; }
-  box.innerHTML = hits.map(n =>
-    `<div class="suggestion-item" onclick="selectName('${n.replace(/'/g,"\\'")}')"> ${n}</div>`
-  ).join('');
+  box.innerHTML = hits.map(n => `<div class="suggestion-item" onclick="selectName('${n.replace(/'/g,"\\'")}')"> ${n}</div>`).join('');
   box.classList.add('open');
 }
 
@@ -972,20 +462,32 @@ function selectName(name) {
   findCertificate();
 }
 
-function showError(msg) {
-  const el = document.getElementById('errorMsg');
-  el.textContent = msg;
-  el.classList.add('show');
-}
-
-function hideError() {
-  document.getElementById('errorMsg').classList.remove('show');
-}
+function showError(msg) { const e = document.getElementById('errorMsg'); e.textContent = msg; e.classList.add('show'); }
+function hideError()     { document.getElementById('errorMsg').classList.remove('show'); }
 
 function genId(name) {
   let h = 0;
   for (let i = 0; i < name.length; i++) { h = ((h << 5) - h) + name.charCodeAt(i); h = h & h; }
   return 'CERT-2025-' + Math.abs(h).toString().padStart(4,'0').slice(-4);
+}
+
+function fillCert(name, id) {
+  // Mobile preview
+  document.getElementById('certName').textContent = name;
+  document.getElementById('certId').textContent   = 'ID: ' + id;
+  // Print template
+  document.getElementById('ptName').textContent = name;
+  document.getElementById('ptId').textContent   = 'ID: ' + id;
+
+  // QR — mobile
+  const qrEl = document.getElementById('qrcode');
+  qrEl.innerHTML = '';
+  new QRCode(qrEl, { text:`BK PORPROV JABAR 2025\nNama: ${name}\nID: ${id}\nCabang: Bola Basket`, width:76, height:76, colorDark:'#0a1f44', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
+
+  // QR — print template
+  const ptQr = document.getElementById('ptQr');
+  ptQr.innerHTML = '';
+  new QRCode(ptQr, { text:`BK PORPROV JABAR 2025\nNama: ${name}\nID: ${id}\nCabang: Bola Basket`, width:90, height:90, colorDark:'#0a1f44', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.H });
 }
 
 function findCertificate() {
@@ -1001,46 +503,26 @@ function findCertificate() {
     if (hits.length === 1) found = hits[0];
     else if (hits.length > 1) { showError('Ditemukan beberapa nama. Ketik lebih lengkap atau pilih dari daftar.'); return; }
   }
-
   if (!found) { showError('Nama tidak ditemukan. Periksa ejaan atau pilih dari daftar atlet.'); return; }
 
-  const id = genId(found);
-  document.getElementById('certName').textContent = found;
-  document.getElementById('certId').textContent = 'ID: ' + id;
+  fillCert(found, genId(found));
 
-  const qrEl = document.getElementById('qrcode');
-  qrEl.innerHTML = '';
-  new QRCode(qrEl, {
-    text: `BK PORPROV JABAR 2025\nNama: ${found}\nID: ${id}\nCabang: Bola Basket`,
-    width: 80, height: 80,
-    colorDark: '#0a1f44', colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.H
-  });
-
-  // Animate panel out, then show cert
+  // Animate panel out → cert in
   const panel = document.getElementById('searchPanel');
-  panel.classList.add('panel-hide');
-
+  panel.style.animation = 'panelOut .3s cubic-bezier(0.45,0,0.55,1) forwards';
   setTimeout(() => {
     panel.style.display = 'none';
-    panel.classList.remove('panel-hide');
-
+    panel.style.animation = '';
     const wrapper = document.getElementById('certWrapper');
     wrapper.style.display = 'block';
-
-    // Trigger stagger animations by resetting cert-row-anim
+    // reset stagger
     wrapper.querySelectorAll('.cert-row-anim').forEach(el => {
-      el.style.animation = 'none';
-      el.offsetHeight; // reflow
-      el.style.animation = '';
+      el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
     });
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        wrapper.classList.add('visible');
-        wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      wrapper.classList.add('visible');
+      wrapper.scrollIntoView({ behavior:'smooth', block:'start' });
+    }));
   }, 280);
 }
 
@@ -1048,54 +530,48 @@ function setDlState(state) {
   const btn   = document.getElementById('downloadBtn');
   const icon  = document.getElementById('dlIcon');
   const label = document.getElementById('dlLabel');
-
   if (state === 'loading') {
-    btn.disabled = true;
-    label.textContent = 'Membuat PDF…';
-    icon.innerHTML = `<circle cx="12" cy="12" r="9"/>`;
-    icon.classList.add('spin-icon');
-    icon.removeAttribute('class');
-    icon.setAttribute('class', 'spin-icon');
+    btn.disabled = true; label.textContent = 'Membuat PDF…';
+    icon.className = 'spin-icon';
+    icon.innerHTML = '<circle cx="12" cy="12" r="9"/>';
   } else if (state === 'success') {
-    icon.removeAttribute('class');
-    icon.setAttribute('class', 'check-icon');
-    icon.innerHTML = `<polyline points="20 6 9 17 4 12"/>`;
+    icon.className = 'check-icon';
+    icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
     label.textContent = 'Berhasil!';
-    btn.style.background = '#2e7d5a';
-    btn.style.color = 'white';
+    btn.style.background = '#1e7e4e'; btn.style.color = 'white';
   } else {
-    btn.disabled = false;
-    icon.removeAttribute('class');
-    icon.innerHTML = `<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>`;
-    label.textContent = 'Unduh PDF';
-    btn.style.background = '';
-    btn.style.color = '';
+    btn.disabled = false; icon.className = ''; label.textContent = 'Unduh PDF';
+    icon.innerHTML = '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>';
+    btn.style.background = ''; btn.style.color = '';
   }
 }
 
 async function downloadPDF() {
   setDlState('loading');
   try {
-    await new Promise(r => setTimeout(r, 500));
-    const card   = document.getElementById('certCard');
-    const canvas = await html2canvas(card, {
-      scale: 3, useCORS: true, allowTaint: true,
-      logging: false, backgroundColor: '#ffffff', imageTimeout: 0
+    // Capture the OFF-SCREEN print template, not the mobile card
+    await new Promise(r => setTimeout(r, 600));
+    const tpl = document.getElementById('certPrintTemplate');
+
+    const canvas = await html2canvas(tpl, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      imageTimeout: 0,
+      width: 1122,
+      height: 794
     });
 
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4', compress: true });
+    const pdf = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4', compress:true });
 
-    const pw = 297, ph = 210;
-    const ar = canvas.width / canvas.height, par = pw / ph;
-    let iw, ih, xo, yo;
-    if (ar > par) { iw = pw; ih = pw / ar; xo = 0; yo = (ph - ih) / 2; }
-    else          { ih = ph; iw = ph * ar; xo = (pw - iw) / 2; yo = 0; }
+    // Fill A4 landscape exactly: 297×210mm
+    pdf.addImage(canvas.toDataURL('image/png', 1.0), 'PNG', 0, 0, 297, 210, '', 'FAST');
 
-    pdf.addImage(canvas.toDataURL('image/png', 1.0), 'PNG', xo, yo, iw, ih, '', 'FAST');
-
-    const name = document.getElementById('certName').textContent;
-    const cid  = document.getElementById('certId').textContent.replace('ID: ', '');
+    const name = document.getElementById('ptName').textContent;
+    const cid  = document.getElementById('ptId').textContent.replace('ID: ','');
     pdf.save(`Sertifikat_${name.replace(/\s+/g,'_')}_${cid}.pdf`);
 
     setDlState('success');
@@ -1110,15 +586,14 @@ async function downloadPDF() {
 function backToSearch() {
   const wrapper = document.getElementById('certWrapper');
   wrapper.classList.remove('visible');
-
   setTimeout(() => {
     wrapper.style.display = 'none';
     const panel = document.getElementById('searchPanel');
     panel.style.display = 'block';
-    panel.classList.add('panel-show');
-    setTimeout(() => panel.classList.remove('panel-show'), 400);
+    panel.style.animation = 'panelIn .4s cubic-bezier(0.16,1,0.3,1) forwards';
+    setTimeout(() => panel.style.animation = '', 400);
     document.getElementById('searchName').value = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top:0, behavior:'smooth' });
   }, 350);
 }
 
